@@ -1,8 +1,9 @@
+from __future__ import absolute_import
 import time
 
 
 def retry(exception_classes=None, tries=10, delay=5, rate=1.3):
-    """
+    u"""
     retry(exception_classes=None, tries=10, delay=5, rate=1.3)
 
     Retry a call against an endpoint <tries> time
@@ -21,29 +22,29 @@ def retry(exception_classes=None, tries=10, delay=5, rate=1.3):
         exception_classes = (Exception,)
 
     tries_counter = {
-        'count': 1,
-        'last_delay': delay
+        u'count': 1,
+        u'last_delay': delay
     }
 
     def decorator(function):
         def wrapper(*args, **kwargs):
             try:
                 return function(*args, **kwargs)
-            except exception_classes as e:
-                if tries_counter.get('count') + 1 > tries:
+            except exception_classes, e:
+                if tries_counter.get(u'count') + 1 > tries:
                     raise e
 
-                delay_now = delay if tries_counter.get('count') == 1 else tries_counter.get('last_delay') * rate
+                delay_now = delay if tries_counter.get(u'count') == 1 else tries_counter.get(u'last_delay') * rate
                 tries_counter.update({
-                    'count': tries_counter.get('count') + 1,
-                    'last_delay': delay_now
+                    u'count': tries_counter.get(u'count') + 1,
+                    u'last_delay': delay_now
                 })
                 time.sleep(delay_now)
                 return wrapper(*args, **kwargs)
             finally:
                 tries_counter.update({
-                    'count': 1,
-                    'last_delay': delay
+                    u'count': 1,
+                    u'last_delay': delay
                 })
 
         wrapper.__doc__ = function.__doc__
@@ -53,7 +54,7 @@ def retry(exception_classes=None, tries=10, delay=5, rate=1.3):
 
 
 def sp_retry(exception_classes=(), tries=10, delay=5, rate=1.3):
-    """
+    u"""
     This is a shorthand for retry that catches all exceptions thrown by this library
 
     Retry a call against an endpoint <tries> time
@@ -71,7 +72,7 @@ def sp_retry(exception_classes=(), tries=10, delay=5, rate=1.3):
 
 
 def throttle_retry(exception_classes=(), tries=10, delay=5, rate=1.3):
-    """
+    u"""
     This is a shorthand for retry that catches SellingApiRequestThrottledException
 
     Retry a call against an endpoint <tries> time

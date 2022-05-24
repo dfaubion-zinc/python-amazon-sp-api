@@ -1,5 +1,5 @@
 class AuthorizationError(Exception):
-    """
+    u"""
     Authorization Error
 
     Parameters:

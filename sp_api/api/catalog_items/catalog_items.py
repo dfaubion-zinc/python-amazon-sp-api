@@ -1,10 +1,11 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class CatalogItems(Client):
-    """
+    u"""
     CatalogItems SP-API Client
     :link: 
 
@@ -12,9 +13,9 @@ class CatalogItems(Client):
     """
 
 
-    @sp_endpoint('/catalog/2020-12-01/items', method='GET')
-    def search_catalog_items(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/catalog/2020-12-01/items', method=u'GET')
+    def search_catalog_items(self, **kwargs):
+        u"""
         search_catalog_items(self, **kwargs) -> ApiResponse
 
         Search for and return a list of Amazon catalog items and associated information.
@@ -44,12 +45,12 @@ class CatalogItems(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop(u'path'),  params=kwargs)
     
 
-    @sp_endpoint('/catalog/2020-12-01/items/{}', method='GET')
-    def get_catalog_item(self, asin, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/catalog/2020-12-01/items/{}', method=u'GET')
+    def get_catalog_item(self, asin, **kwargs):
+        u"""
         get_catalog_item(self, asin, **kwargs) -> ApiResponse
 
         Retrieves details for an item in the Amazon catalog.
@@ -73,5 +74,5 @@ class CatalogItems(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), asin), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), asin), params=kwargs)
     

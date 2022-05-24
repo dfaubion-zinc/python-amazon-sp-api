@@ -1,16 +1,17 @@
+from __future__ import absolute_import
 from sp_api.base.helpers import sp_endpoint
 from sp_api.base import Client, Marketplaces, ApiResponse
 
 
 class Sellers(Client):
-    """
+    u"""
     :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/sellers-api/sellers.md
 
     """
 
-    @sp_endpoint('/sellers/v1/marketplaceParticipations')
-    def get_marketplace_participation(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/sellers/v1/marketplaceParticipations')
+    def get_marketplace_participation(self, **kwargs):
+        u"""
         get_marketplace_participation(self, **kwargs) -> ApiResponse
         Returns a list of marketplaces that the seller submitting the request can sell in and information about the seller's participation in those marketplaces.
 
@@ -36,4 +37,4 @@ class Sellers(Client):
             GetMarketplaceParticipationsResponse:
 
         """
-        return self._request(kwargs.pop('path'), add_marketplace=False)
+        return self._request(kwargs.pop(u'path'), add_marketplace=False)

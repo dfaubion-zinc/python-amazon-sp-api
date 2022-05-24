@@ -1,9 +1,10 @@
+from __future__ import absolute_import
 from enum import Enum
 
 
-class ProcessingStatus(str, Enum):
-    CANCELLED = 'CANCELLED'
-    DONE = 'DONE'
-    FATAL = 'FATAL'
-    IN_PROGRESS = 'IN_PROGRESS'
-    IN_QUEUE = 'IN_QUEUE'
+class ProcessingStatus(unicode, Enum):
+    CANCELLED = u'CANCELLED'
+    DONE = u'DONE'
+    FATAL = u'FATAL'
+    IN_PROGRESS = u'IN_PROGRESS'
+    IN_QUEUE = u'IN_QUEUE'

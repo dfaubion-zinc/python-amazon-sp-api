@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import urllib
 
 from sp_api.base import Client, Marketplaces, sp_endpoint, ApiResponse
@@ -5,13 +6,13 @@ from sp_api.base.InventoryEnums import InventoryGranularity
 
 
 class Inventories(Client):
-    """
+    u"""
     :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/fba-inventory-api/fbaInventory.md#getinventorysummaries
     """
 
-    @sp_endpoint('/fba/inventory/v1/summaries')
-    def get_inventory_summary_marketplace(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/inventory/v1/summaries')
+    def get_inventory_summary_marketplace(self, **kwargs):
+        u"""
         get_inventory_summary_marketplace(self, **kwargs) -> GetInventorySummariesResponse
 
 
@@ -60,11 +61,11 @@ class Inventories(Client):
         """
 
         kwargs.update({
-            'granularityType': kwargs.get('granularityType', InventoryGranularity.MARKETPLACE.value),
-            "granularityId": kwargs.get('granularityId', self.marketplace_id)
+            u'granularityType': kwargs.get(u'granularityType', InventoryGranularity.MARKETPLACE.value),
+            u"granularityId": kwargs.get(u'granularityId', self.marketplace_id)
         })
-        if 'sellerSkus' in kwargs:
-            kwargs.update({'sellerSkus': ','.join([urllib.parse.quote_plus(s) for s in kwargs.get('sellerSkus')])})
+        if u'sellerSkus' in kwargs:
+            kwargs.update({u'sellerSkus': u','.join([urllib.quote_plus(s) for s in kwargs.get(u'sellerSkus')])})
 
-        return self._request(kwargs.pop('path'), params=kwargs)
+        return self._request(kwargs.pop(u'path'), params=kwargs)
 

@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from .finances.finances import Finances
 from .notifications.notifications import Notifications
 from .orders.orders import Orders
@@ -70,72 +71,72 @@ from .fulfillment_outbound.fulfillment_outbound import FulfillmentOutbound
 
 
 __all__ = [
-    "Sales",
-    "Products",
-    "Reports",
-    "Orders",
-    "Sellers",
-    "Notifications",
-    "ProductFees",
-    "Finances",
-    "Catalog",
-    "Feeds",
-    "Inventories",
-    "FulfillmentInbound",
-    'Upload',
-    "Messaging",
-    "FulfillmentInbound",
-    "MerchantFulfillment",
+    u"Sales",
+    u"Products",
+    u"Reports",
+    u"Orders",
+    u"Sellers",
+    u"Notifications",
+    u"ProductFees",
+    u"Finances",
+    u"Catalog",
+    u"Feeds",
+    u"Inventories",
+    u"FulfillmentInbound",
+    u'Upload',
+    u"Messaging",
+    u"FulfillmentInbound",
+    u"MerchantFulfillment",
     ##### DO NOT DELETE ########## INSERT TITLE HERE #######
-    "ListingsRestrictions",
+    u"ListingsRestrictions",
     
-    "Feeds",
-    "FeedsV2",
-    "ReportsV2",
+    u"Feeds",
+    u"FeedsV2",
+    u"ReportsV2",
     
-    "Messaging",
+    u"Messaging",
     
-    "CatalogItems",
+    u"CatalogItems",
     
-    "ProductTypeDefinitions",
+    u"ProductTypeDefinitions",
     
-    "ListingsItems",
+    u"ListingsItems",
     
-    "VendorTransactionStatus",
+    u"VendorTransactionStatus",
     
-    "VendorShipments",
+    u"VendorShipments",
     
-    "VendorOrders",
+    u"VendorOrders",
     
-    "VendorInvoices",
+    u"VendorInvoices",
     
-    "VendorDirectFulfillmentTransactions",
+    u"VendorDirectFulfillmentTransactions",
     
-    "VendorDirectFulfillmentShipping",
+    u"VendorDirectFulfillmentShipping",
     
-    "VendorDirectFulfillmentPayments",
+    u"VendorDirectFulfillmentPayments",
     
-    "VendorDirectFulfillmentOrders",
+    u"VendorDirectFulfillmentOrders",
     
-    "VendorDirectFulfillmentInventory",
+    u"VendorDirectFulfillmentInventory",
     
-    "Tokens",
+    u"Tokens",
     
-    "Solicitations",
+    u"Solicitations",
     
-    "Shipping",
+    u"Shipping",
     
-    "Services",
+    u"Services",
     
-    "FbaSmallAndLight",
+    u"FbaSmallAndLight",
     
-    "FbaInboundEligibility",
+    u"FbaInboundEligibility",
     
-    "Authorization",
+    u"Authorization",
     
-    "AplusContent",
+    u"AplusContent",
     
-    "FulfillmentOutbound",
+    u"FulfillmentOutbound",
     
 
 ]

@@ -1,10 +1,11 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class Tokens(Client):
-    """
+    u"""
     Tokens SP-API Client
     :link: 
 
@@ -12,9 +13,9 @@ class Tokens(Client):
     """
 
 
-    @sp_endpoint('/tokens/2021-03-01/restrictedDataToken', method='POST')
-    def create_restricted_data_token(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/tokens/2021-03-01/restrictedDataToken', method=u'POST')
+    def create_restricted_data_token(self, **kwargs):
+        u"""
         create_restricted_data_token(self, **kwargs) -> ApiResponse
 
         Returns a Restricted Data Token (RDT) for one or more restricted resources that you specify. A restricted resource is the HTTP method and path from a restricted operation that returns Personally Identifiable Information (PII). See the Tokens API Use Case Guide for a list of restricted operations. Use the RDT returned here as the access token in subsequent calls to the corresponding restricted operations.
@@ -62,5 +63,5 @@ class Tokens(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop(u'path'),  data=kwargs)
     

@@ -1,11 +1,23 @@
+from __future__ import absolute_import
 from sp_api.base import Client, Marketplaces, ApiResponse
 from sp_api.base import sp_endpoint, fill_query_params
 
 
+def merge_dicts(*dict_args):
+    """
+    Given any number of dictionaries, shallow copy and merge into a new dict,
+    precedence goes to key-value pairs in latter dictionaries.
+    """
+    result = {}
+    for dictionary in dict_args:
+        result.update(dictionary)
+    return result
+
+
 class FulfillmentInbound(Client):
-    @sp_endpoint("/fba/inbound/v0/itemsGuidance")
+    @sp_endpoint(u"/fba/inbound/v0/itemsGuidance")
     def item_guidance(self, **kwargs):
-        """
+        u"""
         item_guidance(self, **kwargs) -> ApiResponse
 
         Examples:
@@ -19,11 +31,11 @@ class FulfillmentInbound(Client):
         Returns:
             ApiResponse
         """
-        return self._request(kwargs.pop("path"), params=kwargs)
+        return self._request(kwargs.pop(u"path"), params=kwargs)
 
-    @sp_endpoint("/fba/inbound/v0/plans", method="POST")
+    @sp_endpoint(u"/fba/inbound/v0/plans", method=u"POST")
     def plans(self, data, **kwargs):
-        """
+        u"""
         plans(self, data, **kwargs) -> ApiResponse
 
         Examples:
@@ -67,11 +79,11 @@ class FulfillmentInbound(Client):
         Returns:
             ApiResponse
         """
-        return self._request(kwargs.pop("path"), data={**data, **kwargs})
+        return self._request(kwargs.pop(u"path"), data=merge_dicts(data, kwargs))
 
-    @sp_endpoint("/fba/inbound/v0/shipments/{}", method="POST")
+    @sp_endpoint(u"/fba/inbound/v0/shipments/{}", method=u"POST")
     def create_shipment(self, shipment_id, data, **kwargs):
-        """
+        u"""
         create_shipment(self, shipment_id, data, **kwargs)
 
         Examples:
@@ -124,12 +136,12 @@ class FulfillmentInbound(Client):
             ApiResponse
         """
         return self._request(
-            fill_query_params(kwargs.pop("path"), shipment_id), data={**data, **kwargs}
+            fill_query_params(kwargs.pop(u"path"), shipment_id), data=merge_dicts(data, kwargs)
         )
 
-    @sp_endpoint("/fba/inbound/v0/shipments/{}", method="PUT")
+    @sp_endpoint(u"/fba/inbound/v0/shipments/{}", method=u"PUT")
     def update_shipment(self, shipment_id, data, **kwargs):
-        """
+        u"""
         update_shipment(self, shipment_id, data, **kwargs) -> ApiResponse
 
         Examples:
@@ -170,12 +182,12 @@ class FulfillmentInbound(Client):
             ApiResponse
         """
         return self._request(
-            fill_query_params(kwargs.pop("path"), shipment_id), data={**data, **kwargs}
+            fill_query_params(kwargs.pop(u"path"), shipment_id), data=merge_dicts(data, kwargs)
         )
 
-    @sp_endpoint("/fba/inbound/v0/shipments/{}/preorder")
+    @sp_endpoint(u"/fba/inbound/v0/shipments/{}/preorder")
     def preorder(self, shipment_id, **kwargs):
-        """
+        u"""
         preorder(self, shipment_id, **kwargs) -> ApiResponse
 
         Examples:
@@ -191,12 +203,12 @@ class FulfillmentInbound(Client):
             ApiResponse
         """
         return self._request(
-            fill_query_params(kwargs.pop("path"), shipment_id), params=kwargs
+            fill_query_params(kwargs.pop(u"path"), shipment_id), params=kwargs
         )
 
-    @sp_endpoint("/fba/inbound/v0/shipments/{}/preorder/confirm", method="PUT")
+    @sp_endpoint(u"/fba/inbound/v0/shipments/{}/preorder/confirm", method=u"PUT")
     def confirm_preorder(self, shipment_id, **kwargs):
-        """
+        u"""
         confirm_preorder(self, shipment_id, **kwargs)
 
         Args:
@@ -207,12 +219,12 @@ class FulfillmentInbound(Client):
 
         """
         return self._request(
-            fill_query_params(kwargs.pop("path"), shipment_id), params=kwargs
+            fill_query_params(kwargs.pop(u"path"), shipment_id), params=kwargs
         )
 
-    @sp_endpoint("/fba/inbound/v0/prepInstructions")
+    @sp_endpoint(u"/fba/inbound/v0/prepInstructions")
     def prep_instruction(self, data, **kwargs):
-        """
+        u"""
         prep_instruction(self, data, **kwargs) -> ApiResponse
 
         Examples:
@@ -227,11 +239,11 @@ class FulfillmentInbound(Client):
         Returns:
             ApiResponse
         """
-        return self._request(kwargs.pop("path"), params={**data, **kwargs})
+        return self._request(kwargs.pop(u"path"), params=merge_dicts(data, kwargs))
 
-    @sp_endpoint("/fba/inbound/v0/shipments/{}/transport")
+    @sp_endpoint(u"/fba/inbound/v0/shipments/{}/transport")
     def get_transport_information(self, shipment_id, **kwargs):
-        """
+        u"""
         get_transport_information(self, shipment_id, **kwargs) -> ApiResponse
 
         Examples:
@@ -247,12 +259,12 @@ class FulfillmentInbound(Client):
             ApiResponse
         """
         return self._request(
-            fill_query_params(kwargs.pop("path"), shipment_id), params=kwargs
+            fill_query_params(kwargs.pop(u"path"), shipment_id), params=kwargs
         )
 
-    @sp_endpoint("/fba/inbound/v0/shipments/{}/transport", method="PUT")
+    @sp_endpoint(u"/fba/inbound/v0/shipments/{}/transport", method=u"PUT")
     def update_transport_information(self, shipment_id, **kwargs):
-        """
+        u"""
         update_transport_information(self, shipment_id, **kwargs) -> ApiResponse
 
         putTransportDetails
@@ -265,12 +277,12 @@ class FulfillmentInbound(Client):
             ApiResponse
         """
         return self._request(
-            fill_query_params(kwargs.pop("path"), shipment_id), data=kwargs
+            fill_query_params(kwargs.pop(u"path"), shipment_id), data=kwargs
         )
 
-    @sp_endpoint("/fba/inbound/v0/shipments/{}/transport/void", method="POST")
+    @sp_endpoint(u"/fba/inbound/v0/shipments/{}/transport/void", method=u"POST")
     def void_transport(self, shipment_id, **kwargs):
-        """
+        u"""
         void_transport(self, shipment_id, **kwargs) -> ApiResponse
 
         Examples:
@@ -286,14 +298,14 @@ class FulfillmentInbound(Client):
             ApiResponse
         """
         return self._request(
-            fill_query_params(kwargs.pop("path"), shipment_id),
+            fill_query_params(kwargs.pop(u"path"), shipment_id),
             data=kwargs,
             add_marketplace=False,
         )
 
-    @sp_endpoint("/fba/inbound/v0/shipments/{}/transport/estimate", method="POST")
+    @sp_endpoint(u"/fba/inbound/v0/shipments/{}/transport/estimate", method=u"POST")
     def estimate_transport(self, shipment_id, **kwargs):
-        """
+        u"""
         estimate_transport(self, shipment_id, **kwargs) -> ApiResponse
 
         Examples:
@@ -309,22 +321,22 @@ class FulfillmentInbound(Client):
             ApiResponse
         """
         return self._request(
-            fill_query_params(kwargs.pop("path"), shipment_id),
+            fill_query_params(kwargs.pop(u"path"), shipment_id),
             data=kwargs,
             add_marketplace=False,
         )
 
-    @sp_endpoint("/fba/inbound/v0/shipments/{}/transport/confirm", method="POST")
+    @sp_endpoint(u"/fba/inbound/v0/shipments/{}/transport/confirm", method=u"POST")
     def confirm_transport(self, shipment_id, **kwargs):
         return self._request(
-            fill_query_params(kwargs.pop("path"), shipment_id),
+            fill_query_params(kwargs.pop(u"path"), shipment_id),
             data=kwargs,
             add_marketplace=False,
         )
 
-    @sp_endpoint("/fba/inbound/v0/shipments/{}/labels")
+    @sp_endpoint(u"/fba/inbound/v0/shipments/{}/labels")
     def get_labels(self, shipment_id, **kwargs):
-        """
+        u"""
         get_labels(self, shipment_id, **kwargs)
 
         Args:
@@ -335,14 +347,14 @@ class FulfillmentInbound(Client):
 
         """
         return self._request(
-            fill_query_params(kwargs.pop("path"), shipment_id),
+            fill_query_params(kwargs.pop(u"path"), shipment_id),
             params=kwargs,
             add_marketplace=False,
         )
 
-    @sp_endpoint("/fba/inbound/v0/shipments/{}/billOfLading")
+    @sp_endpoint(u"/fba/inbound/v0/shipments/{}/billOfLading")
     def bill_of_lading(self, shipment_id, **kwargs):
-        """
+        u"""
         bill_of_lading(self, shipment_id, **kwargs) -> ApiResponse
 
         Examples:
@@ -358,12 +370,12 @@ class FulfillmentInbound(Client):
             ApiResponse
         """
         return self._request(
-            fill_query_params(kwargs.pop("path"), shipment_id), params=kwargs
+            fill_query_params(kwargs.pop(u"path"), shipment_id), params=kwargs
         )
 
-    @sp_endpoint("/fba/inbound/v0/shipments")
+    @sp_endpoint(u"/fba/inbound/v0/shipments")
     def get_shipments(self, **kwargs):
-        """
+        u"""
         get_shipments(self, **kwargs) -> ApiResponse
 
         Examples:
@@ -377,11 +389,11 @@ class FulfillmentInbound(Client):
         Returns:
             ApiResponse
         """
-        return self._request(kwargs.pop("path"), params=kwargs)
+        return self._request(kwargs.pop(u"path"), params=kwargs)
 
-    @sp_endpoint("/fba/inbound/v0/shipments/{}/items")
+    @sp_endpoint(u"/fba/inbound/v0/shipments/{}/items")
     def shipment_items_by_shipment(self, shipment_id, **kwargs):
-        """
+        u"""
         shipment_items_by_shipment(self, shipment_id, **kwargs) -> ApiResponse
 
         Examples:
@@ -397,12 +409,12 @@ class FulfillmentInbound(Client):
             ApiResponse
         """
         return self._request(
-            fill_query_params(kwargs.pop("path"), shipment_id), params=kwargs
+            fill_query_params(kwargs.pop(u"path"), shipment_id), params=kwargs
         )
 
-    @sp_endpoint("/fba/inbound/v0/shipmentItems")
+    @sp_endpoint(u"/fba/inbound/v0/shipmentItems")
     def shipment_items(self, **kwargs):
-        """
+        u"""
         shipment_items(self, **kwargs) -> ApiResponse
 
         Examples:
@@ -416,4 +428,4 @@ class FulfillmentInbound(Client):
         Returns:
             ApiResponse
         """
-        return self._request(kwargs.pop("path"), params=kwargs)
+        return self._request(kwargs.pop(u"path"), params=kwargs)

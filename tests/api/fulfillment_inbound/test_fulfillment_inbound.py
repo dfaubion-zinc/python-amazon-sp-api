@@ -1,39 +1,40 @@
+from __future__ import absolute_import
 from datetime import datetime, timedelta
 
 from sp_api.api import FulfillmentInbound
 
 
 def test_item_guidance():
-    res = FulfillmentInbound().item_guidance(SellerSKUList=','.join(["sku1", "sku2"]), MarketplaceId='MarketplaceId')
+    res = FulfillmentInbound().item_guidance(SellerSKUList=u','.join([u"sku1", u"sku2"]), MarketplaceId=u'MarketplaceId')
     assert res.errors is None
 
 
 def test_plans():
     res = FulfillmentInbound().plans({
-        "ShipFromAddress": {
-            "Name": "Name",
-            "AddressLine1": "123 any st",
-            "AddressLine2": "AddressLine2",
-            "DistrictOrCounty": "Washtenaw",
-            "City": "Ann Arbor",
-            "StateOrProvinceCode": "MI",
-            "CountryCode": "US",
-            "PostalCode": "48188"
+        u"ShipFromAddress": {
+            u"Name": u"Name",
+            u"AddressLine1": u"123 any st",
+            u"AddressLine2": u"AddressLine2",
+            u"DistrictOrCounty": u"Washtenaw",
+            u"City": u"Ann Arbor",
+            u"StateOrProvinceCode": u"MI",
+            u"CountryCode": u"US",
+            u"PostalCode": u"48188"
         },
-        "LabelPrepPreference": "SELLER_LABEL",
-        "ShipToCountryCode": "ShipToCountryCode",
-        "ShipToCountrySubdivisionCode": "ShipToCountrySubdivisionCode",
-        "InboundShipmentPlanRequestItems": [
+        u"LabelPrepPreference": u"SELLER_LABEL",
+        u"ShipToCountryCode": u"ShipToCountryCode",
+        u"ShipToCountrySubdivisionCode": u"ShipToCountrySubdivisionCode",
+        u"InboundShipmentPlanRequestItems": [
             {
-                "SellerSKU": "SellerSKU",
-                "ASIN": "ASIN",
-                "Condition": "NewItem",
-                "Quantity": 1,
-                "QuantityInCase": 1,
-                "PrepDetailsList": [
+                u"SellerSKU": u"SellerSKU",
+                u"ASIN": u"ASIN",
+                u"Condition": u"NewItem",
+                u"Quantity": 1,
+                u"QuantityInCase": 1,
+                u"PrepDetailsList": [
                     {
-                        "PrepInstruction": "Polybagging",
-                        "PrepOwner": "AMAZON"
+                        u"PrepInstruction": u"Polybagging",
+                        u"PrepOwner": u"AMAZON"
                     }
                 ]
             }
@@ -43,69 +44,69 @@ def test_plans():
 
 
 def test_create_inbound_shipment():
-    res = FulfillmentInbound().create_shipment('123', {
-        "InboundShipmentHeader": {
-            "ShipmentName": "43545345",
-            "ShipFromAddress": {
-                "Name": "35435345",
-                "AddressLine1": "123 any st",
-                "DistrictOrCounty": "Washtenaw",
-                "City": "Ann Arbor",
-                "StateOrProvinceCode": "Test",
-                "CountryCode": "US",
-                "PostalCode": "48103"
+    res = FulfillmentInbound().create_shipment(u'123', {
+        u"InboundShipmentHeader": {
+            u"ShipmentName": u"43545345",
+            u"ShipFromAddress": {
+                u"Name": u"35435345",
+                u"AddressLine1": u"123 any st",
+                u"DistrictOrCounty": u"Washtenaw",
+                u"City": u"Ann Arbor",
+                u"StateOrProvinceCode": u"Test",
+                u"CountryCode": u"US",
+                u"PostalCode": u"48103"
             },
-            "DestinationFulfillmentCenterId": "AEB2",
-            "AreCasesRequired": True,
-            "ShipmentStatus": "WORKING",
-            "LabelPrepPreference": "SELLER_LABEL",
-            "IntendedBoxContentsSource": "NONE"
+            u"DestinationFulfillmentCenterId": u"AEB2",
+            u"AreCasesRequired": True,
+            u"ShipmentStatus": u"WORKING",
+            u"LabelPrepPreference": u"SELLER_LABEL",
+            u"IntendedBoxContentsSource": u"NONE"
         },
-        "InboundShipmentItems": [
+        u"InboundShipmentItems": [
             {
-                "ShipmentId": "345453",
-                "SellerSKU": "34534545",
-                "FulfillmentNetworkSKU": "435435435",
-                "QuantityShipped": 0,
-                "QuantityReceived": 0,
-                "QuantityInCase": 0,
-                "ReleaseDate": "2020-04-23",
-                "PrepDetailsList": [
+                u"ShipmentId": u"345453",
+                u"SellerSKU": u"34534545",
+                u"FulfillmentNetworkSKU": u"435435435",
+                u"QuantityShipped": 0,
+                u"QuantityReceived": 0,
+                u"QuantityInCase": 0,
+                u"ReleaseDate": u"2020-04-23",
+                u"PrepDetailsList": [
                     {
-                        "PrepInstruction": "Polybagging",
-                        "PrepOwner": "AMAZON"
+                        u"PrepInstruction": u"Polybagging",
+                        u"PrepOwner": u"AMAZON"
                     }
                 ]
             }
         ],
-        "MarketplaceId": "MarketplaceId"
+        u"MarketplaceId": u"MarketplaceId"
     })
     assert res.errors is None
 
 
 def test_update_shipment():
-    res = FulfillmentInbound().update_shipment('123', {
-        "MarketplaceId": "ATVPDKIKX0DER",
-        "InboundShipmentHeader": {
-            "ShipmentName": "Shipment for FBA15DJCQ1ZF",
-            "ShipFromAddress": {
-                "Name": "Uma Test",
-                "AddressLine1": "123 any st",
-                "AddressLine2": "",
-                "DistrictOrCounty": "Washtenaw",
-                "City": "Ann Arbor",
-                "StateOrProvinceCode": "CO",
-                "CountryCode": "US",
-                "PostalCode": "48104"
+    res = FulfillmentInbound().update_shipment(u'123', {
+        u"MarketplaceId": u"ATVPDKIKX0DER",
+        u"InboundShipmentHeader": {
+            u"ShipmentName": u"Shipment for FBA15DJCQ1ZF",
+            u"ShipFromAddress": {
+                u"Name": u"Uma Test",
+                u"AddressLine1": u"123 any st",
+                u"AddressLine2": u"",
+                u"DistrictOrCounty": u"Washtenaw",
+                u"City": u"Ann Arbor",
+                u"StateOrProvinceCode": u"CO",
+                u"CountryCode": u"US",
+                u"PostalCode": u"48104"
             },
-            "DestinationFulfillmentCenterId": "ABE2",
-            "ShipmentStatus": "WORKING",
-            "LabelPrepPreference": "SELLER_LABEL"
+            u"DestinationFulfillmentCenterId": u"ABE2",
+            u"ShipmentStatus": u"WORKING",
+            u"LabelPrepPreference": u"SELLER_LABEL"
         },
-        "InboundShipmentItems": [
+        u"InboundShipmentItems": [
             {
-                "SellerSKU": "PSMM-TEST-SKU-Apr-03_21_17_20-0379",
-                "QuantityShipped": 1
+                u"SellerSKU": u"PSMM-TEST-SKU-Apr-03_21_17_20-0379",
+                u"QuantityShipped": 1
             }
         ]
     })
@@ -113,7 +114,7 @@ def test_update_shipment():
 
 
 def test_preorder():
-    res = FulfillmentInbound().preorder('shipmentId1', MarketplaceId='MarketplaceId1')
+    res = FulfillmentInbound().preorder(u'shipmentId1', MarketplaceId=u'MarketplaceId1')
     assert res.errors is None
 
 #
@@ -126,40 +127,40 @@ def test_preorder():
 
 
 def test_get_prep_orders():
-    res = FulfillmentInbound().prep_instruction({"ShipToCountryCode": "US", "ASINList": ["ASIN1"]})
+    res = FulfillmentInbound().prep_instruction({u"ShipToCountryCode": u"US", u"ASINList": [u"ASIN1"]})
     assert res.errors is None
 
 
 def test_get_transport():
-    res = FulfillmentInbound().get_transport_information('shipmentId1')
+    res = FulfillmentInbound().get_transport_information(u'shipmentId1')
     assert res.errors is None
 
 
 def test_void_transport():
-    res = FulfillmentInbound().void_transport('shipmentId1')
+    res = FulfillmentInbound().void_transport(u'shipmentId1')
     assert res.errors is None
 
 
 def test_estimate_transport():
-    res = FulfillmentInbound().estimate_transport('shipmentId1')
+    res = FulfillmentInbound().estimate_transport(u'shipmentId1')
     assert res.errors is None
 
 
 def test_get_bill_of_lading():
-    res = FulfillmentInbound().bill_of_lading('shipmentId')
+    res = FulfillmentInbound().bill_of_lading(u'shipmentId')
     assert res.errors is None
 
 
 def test_get_shipments():
-    res = FulfillmentInbound().get_shipments(QueryType='SHIPMENT', MarketplaceId="ATVPDKIKX0DER")
+    res = FulfillmentInbound().get_shipments(QueryType=u'SHIPMENT', MarketplaceId=u"ATVPDKIKX0DER")
     assert res.errors is None
 
 
 def test_get_shipment_items():
-    res = FulfillmentInbound().shipment_items_by_shipment('FBA15DJ9SVVD', MarketplaceId="ATVPDKIKX0DER")
+    res = FulfillmentInbound().shipment_items_by_shipment(u'FBA15DJ9SVVD', MarketplaceId=u"ATVPDKIKX0DER")
     assert res.errors is None
 
 
 def test_get_items():
-    res = FulfillmentInbound().shipment_items(QueryType='SHIPMENT', MarketplaceId="ATVPDKIKX0DER", NextToken='NextToken')
+    res = FulfillmentInbound().shipment_items(QueryType=u'SHIPMENT', MarketplaceId=u"ATVPDKIKX0DER", NextToken=u'NextToken')
     assert res.errors is None

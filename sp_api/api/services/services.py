@@ -1,10 +1,11 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class Services(Client):
-    """
+    u"""
     Services SP-API Client
     :link: 
 
@@ -12,9 +13,9 @@ class Services(Client):
     """
 
 
-    @sp_endpoint('/service/v1/serviceJobs/{}', method='GET')
-    def get_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/service/v1/serviceJobs/{}', method=u'GET')
+    def get_service_job_by_service_job_id(self, serviceJobId, **kwargs):
+        u"""
         get_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse
 
         Gets service job details for the service job indicated by the service job identifier you specify.
@@ -36,12 +37,12 @@ class Services(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), serviceJobId), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), serviceJobId), params=kwargs)
     
 
-    @sp_endpoint('/service/v1/serviceJobs/{}/cancellations', method='PUT')
-    def cancel_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/service/v1/serviceJobs/{}/cancellations', method=u'PUT')
+    def cancel_service_job_by_service_job_id(self, serviceJobId, **kwargs):
+        u"""
         cancel_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse
 
         Cancels the service job indicated by the service job identifier you specify.
@@ -65,12 +66,12 @@ class Services(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), serviceJobId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), serviceJobId), data=kwargs)
     
 
-    @sp_endpoint('/service/v1/serviceJobs/{}/completions', method='PUT')
-    def complete_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/service/v1/serviceJobs/{}/completions', method=u'PUT')
+    def complete_service_job_by_service_job_id(self, serviceJobId, **kwargs):
+        u"""
         complete_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse
 
         Completes the service job indicated by the service job identifier you specify.
@@ -93,12 +94,12 @@ class Services(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), serviceJobId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), serviceJobId), data=kwargs)
     
 
-    @sp_endpoint('/service/v1/serviceJobs', method='GET')
-    def get_service_jobs(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/service/v1/serviceJobs', method=u'GET')
+    def get_service_jobs(self, **kwargs):
+        u"""
         get_service_jobs(self, **kwargs) -> ApiResponse
 
         Gets service job details for the specified filter query.
@@ -132,12 +133,12 @@ class Services(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop(u'path'),  params=kwargs)
     
 
-    @sp_endpoint('/service/v1/serviceJobs/{}/appointments', method='POST')
-    def add_appointment_for_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/service/v1/serviceJobs/{}/appointments', method=u'POST')
+    def add_appointment_for_service_job_by_service_job_id(self, serviceJobId, **kwargs):
+        u"""
         add_appointment_for_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse
 
         Adds an appointment to the service job indicated by the service job identifier you specify.
@@ -166,12 +167,12 @@ class Services(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), serviceJobId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), serviceJobId), data=kwargs)
     
 
-    @sp_endpoint('/service/v1/serviceJobs/{}', method='POST')
-    def reschedule_appointment_for_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/service/v1/serviceJobs/{}', method=u'POST')
+    def reschedule_appointment_for_service_job_by_service_job_id(self, serviceJobId, **kwargs):
+        u"""
         reschedule_appointment_for_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse
 
         Reschedules an appointment for the service job indicated by the service job identifier you specify.
@@ -202,5 +203,5 @@ class Services(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), serviceJobId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), serviceJobId), data=kwargs)
     

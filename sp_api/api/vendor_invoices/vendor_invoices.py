@@ -1,19 +1,30 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
-class VendorInvoices(Client):
+def merge_dicts(*dict_args):
     """
+    Given any number of dictionaries, shallow copy and merge into a new dict,
+    precedence goes to key-value pairs in latter dictionaries.
+    """
+    result = {}
+    for dictionary in dict_args:
+        result.update(dictionary)
+    return result
+
+class VendorInvoices(Client):
+    u"""
     VendorInvoices SP-API Client
     :link: 
 
     The Selling Partner API for Retail Procurement Payments provides programmatic access to vendors payments data.
     """
 
-    @sp_endpoint('/vendor/payments/v1/invoices', method='POST')
-    def submit_invoices(self, data, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/payments/v1/invoices', method=u'POST')
+    def submit_invoices(self, data, **kwargs):
+        u"""
         submit_invoices(self, data, **kwargs) -> ApiResponse
 
         Submit new invoices to Amazon.
@@ -289,4 +300,4 @@ class VendorInvoices(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data={**data, **kwargs}, add_marketplace=False)
+        return self._request(kwargs.pop(u'path'),  data=merge_dicts(data, kwargs), add_marketplace=False)

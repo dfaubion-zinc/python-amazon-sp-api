@@ -1,15 +1,16 @@
+from __future__ import absolute_import
 from sp_api.base import sp_endpoint, fill_query_params, ApiResponse, deprecated
 from sp_api.base import Client, Marketplaces
 
 
 class Orders(Client):
-    """
+    u"""
     :link: https://github.com/amzn/selling-partner-api-docs/tree/main/references/orders-api
     """
 
-    @sp_endpoint('/orders/v0/orders')
-    def get_orders(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/orders/v0/orders')
+    def get_orders(self, **kwargs):
+        u"""
         get_orders(self, **kwargs) -> ApiResponse
         Returns orders created or updated during the time frame indicated by the specified parameters.
         You can also apply a range of filtering criteria to narrow the list of orders returned.
@@ -53,13 +54,13 @@ class Orders(Client):
 
 
         """
-        if 'RestrictedResources' in kwargs:
+        if u'RestrictedResources' in kwargs:
             return self._access_restricted(kwargs)
-        return self._request(kwargs.pop('path'), params={**kwargs})
+        return self._request(kwargs.pop(u'path'), params=kwargs.copy())
 
-    @sp_endpoint('/orders/v0/orders/{}')
-    def get_order(self, order_id: str, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/orders/v0/orders/{}')
+    def get_order(self, order_id, **kwargs):
+        u"""
         get_order(self, order_id: str, **kwargs) -> ApiResponse
         Returns the order indicated by the specified order ID.
 
@@ -89,14 +90,14 @@ class Orders(Client):
 
 
         """
-        if 'RestrictedResources' in kwargs:
-            kwargs.update({'original_path': fill_query_params(kwargs.get('path'), order_id)})
+        if u'RestrictedResources' in kwargs:
+            kwargs.update({u'original_path': fill_query_params(kwargs.get(u'path'), order_id)})
             return self._access_restricted(kwargs)
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}, add_marketplace=False)
+        return self._request(fill_query_params(kwargs.pop(u'path'), order_id), params=set(list(kwargs.items())), add_marketplace=False)
 
-    @sp_endpoint('/orders/v0/orders/{}/orderItems')
-    def get_order_items(self, order_id: str, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/orders/v0/orders/{}/orderItems')
+    def get_order_items(self, order_id, **kwargs):
+        u"""
         get_order_items(self, order_id: str, **kwargs) -> ApiResponse
 
         Returns detailed order item information for the order indicated by the specified order ID.
@@ -136,14 +137,14 @@ class Orders(Client):
             ApiResponse:
 
         """
-        if 'RestrictedResources' in kwargs:
-            kwargs.update({'original_path': fill_query_params(kwargs.get('path'), order_id)})
+        if u'RestrictedResources' in kwargs:
+            kwargs.update({u'original_path': fill_query_params(kwargs.get(u'path'), order_id)})
             return self._access_restricted(kwargs)
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs})
+        return self._request(fill_query_params(kwargs.pop(u'path'), order_id), params=set(list(kwargs.items())))
 
-    @sp_endpoint('/orders/v0/orders/{}/address')
-    def get_order_address(self, order_id, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/orders/v0/orders/{}/address')
+    def get_order_address(self, order_id, **kwargs):
+        u"""
         get_order_address(self, order_id, **kwargs) -> ApiResponse
 
         Returns the shipping address for the order indicated by the specified order ID.
@@ -168,11 +169,11 @@ class Orders(Client):
         Returns:
             ApiResponse
         """
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs})
+        return self._request(fill_query_params(kwargs.pop(u'path'), order_id), params=kwargs)
 
-    @sp_endpoint('/orders/v0/orders/{}/buyerInfo')
-    def get_order_buyer_info(self, order_id: str, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/orders/v0/orders/{}/buyerInfo')
+    def get_order_buyer_info(self, order_id, **kwargs):
+        u"""
         get_order_buyer_info(self, order_id: str, **kwargs) -> ApiResponse
         Returns buyer information for the order indicated by the specified order ID.
 
@@ -201,11 +202,11 @@ class Orders(Client):
             GetOrderBuyerInfoResponse:
 
         """
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs})
+        return self._request(fill_query_params(kwargs.pop(u'path'), order_id), params=set(list(kwargs.items())))
 
-    @sp_endpoint('/orders/v0/orders/{}/orderItems/buyerInfo')
-    def get_order_items_buyer_info(self, order_id: str, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/orders/v0/orders/{}/orderItems/buyerInfo')
+    def get_order_items_buyer_info(self, order_id, **kwargs):
+        u"""
         get_order_items_buyer_info(self, order_id: str, **kwargs) -> ApiResponse
 
         Returns buyer information in the order items of the order indicated by the specified order ID.
@@ -232,26 +233,26 @@ class Orders(Client):
         Returns:
             ApiResponse
         """
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), order_id), params=kwargs)
 
-    @sp_endpoint('/tokens/2021-03-01/restrictedDataToken', method='POST')
+    @sp_endpoint(u'/tokens/2021-03-01/restrictedDataToken', method=u'POST')
     def _get_token(self, **kwargs):
-        data_elements = kwargs.pop('RestrictedResources')
+        data_elements = kwargs.pop(u'RestrictedResources')
 
         restricted_resources = [{
-            "method": "GET",
-            "path": kwargs.get('original_path'),
-            "dataElements": data_elements
+            u"method": u"GET",
+            u"path": kwargs.get(u'original_path'),
+            u"dataElements": data_elements
         }]
 
-        return self._request(kwargs.pop('path'), data={'restrictedResources': restricted_resources, **kwargs})
+        return self._request(kwargs.pop(u'path'), data=dict(kwargs, restrictedResources=restricted_resources))
 
     def _access_restricted(self, kwargs):
-        if 'original_path' not in kwargs:
-            kwargs.update({'original_path': kwargs['path']})
+        if u'original_path' not in kwargs:
+            kwargs.update({u'original_path': kwargs[u'path']})
         token = self._get_token(**kwargs).payload
-        self.restricted_data_token = token['restrictedDataToken']
-        r = self._request(kwargs.pop('original_path'), params={**kwargs})
+        self.restricted_data_token = token[u'restrictedDataToken']
+        r = self._request(kwargs.pop(u'original_path'), params=kwargs.copy())
         if not self.keep_restricted_data_token:
             self.restricted_data_token = None
         return r

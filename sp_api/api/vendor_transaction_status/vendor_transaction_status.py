@@ -1,10 +1,11 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class VendorTransactionStatus(Client):
-    """
+    u"""
     VendorTransactionStatus SP-API Client
     :link: 
 
@@ -12,9 +13,9 @@ class VendorTransactionStatus(Client):
     """
 
 
-    @sp_endpoint('/vendor/transactions/v1/transactions/{}', method='GET')
-    def get_transaction(self, transactionId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/transactions/v1/transactions/{}', method=u'GET')
+    def get_transaction(self, transactionId, **kwargs):
+        u"""
         get_transaction(self, transactionId, **kwargs) -> ApiResponse
 
         Returns the status of the transaction that you specify.
@@ -36,5 +37,5 @@ class VendorTransactionStatus(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), transactionId), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), transactionId), params=kwargs)
     

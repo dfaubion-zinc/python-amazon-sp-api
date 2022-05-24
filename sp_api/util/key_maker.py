@@ -1,8 +1,9 @@
+from __future__ import absolute_import
 import re
 
 
-class KeyMaker:
-    """
+class KeyMaker(object):
+    u"""
     Map the different keys amazon uses for the same property to a single one
 
 
@@ -36,14 +37,16 @@ class KeyMaker:
             {'sku': 1, 'title': {'sku': ['seller_sku', 3, {'sku': 22, 'title': {'title': 'Foo', 'x': 'bar'}}]}}
     """
 
-    def __init__(self, key_mapping=None, *, deep=True):
+    def __init__(self, key_mapping=None, **_3to2kwargs):
+        if 'deep' in _3to2kwargs: deep = _3to2kwargs['deep']; del _3to2kwargs['deep']
+        else: deep = True
         if key_mapping is None:
             key_mapping = {}
         self.key_mapping = key_mapping
         self.deep = deep
 
-    def convert_keys(self, data: dict or list):
-        """
+    def convert_keys(self, data):
+        u"""
         convert_keys(self, data: dict or list)
 
         Map the different keys amazon uses for the same property to a single one
@@ -59,10 +62,9 @@ class KeyMaker:
             return [self.convert_keys(d) for d in data]
         if not isinstance(data, dict):
             return data
-        return {
-            self._map_to_key_mapping(k): self.convert_keys(v) if self.deep else v
-            for k, v in data.items()
-        }
+        return dict((
+            self._map_to_key_mapping(k), self.convert_keys(v) if self.deep else v)
+            for k, v in data.items())
 
     def _map_to_key_mapping(self, key):
         for k, v in self.key_mapping.items():
@@ -72,5 +74,5 @@ class KeyMaker:
 
     @staticmethod
     def _replace_dash(key):
-        return key[0].lower() + ''.join(
-            word.title() if i > 0 else word for i, word in enumerate(re.sub(r'[-\s]', '_', key[1:]).split('_')))
+        return key[0].lower() + u''.join(
+            word.title() if i > 0 else word for i, word in enumerate(re.sub(ur'[-\s]', u'_', key[1:]).split(u'_')))

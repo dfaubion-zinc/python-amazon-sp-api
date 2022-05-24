@@ -1,10 +1,11 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class ProductTypeDefinitions(Client):
-    """
+    u"""
     ProductTypeDefinitions SP-API Client
     :link: 
 
@@ -12,9 +13,9 @@ class ProductTypeDefinitions(Client):
     """
 
 
-    @sp_endpoint('/definitions/2020-09-01/productTypes', method='GET')
-    def search_definitions_product_types(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/definitions/2020-09-01/productTypes', method=u'GET')
+    def search_definitions_product_types(self, **kwargs):
+        u"""
         search_definitions_product_types(self, **kwargs) -> ApiResponse
 
         Search for and return a list of Amazon product types that have definitions available.
@@ -37,12 +38,12 @@ class ProductTypeDefinitions(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop(u'path'),  params=kwargs)
     
 
-    @sp_endpoint('/definitions/2020-09-01/productTypes/{}', method='GET')
-    def get_definitions_product_type(self, productType, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/definitions/2020-09-01/productTypes/{}', method=u'GET')
+    def get_definitions_product_type(self, productType, **kwargs):
+        u"""
         get_definitions_product_type(self, productType, **kwargs) -> ApiResponse
 
         Retrieve an Amazon product type definition.
@@ -71,5 +72,5 @@ class ProductTypeDefinitions(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), productType), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), productType), params=kwargs)
     

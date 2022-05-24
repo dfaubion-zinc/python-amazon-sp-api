@@ -1,10 +1,11 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class FulfillmentOutbound(Client):
-    """
+    u"""
     FulfillmentOutbound SP-API Client
     :link: 
 
@@ -12,9 +13,9 @@ class FulfillmentOutbound(Client):
     """
 
 
-    @sp_endpoint('/fba/outbound/2020-07-01/fulfillmentOrders/preview', method='POST')
-    def get_fulfillment_preview(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/outbound/2020-07-01/fulfillmentOrders/preview', method=u'POST')
+    def get_fulfillment_preview(self, **kwargs):
+        u"""
         get_fulfillment_preview(self, **kwargs) -> ApiResponse
 
         Returns a list of fulfillment order previews based on shipping criteria that you specify.
@@ -114,12 +115,12 @@ class FulfillmentOutbound(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop(u'path'),  data=kwargs)
     
 
-    @sp_endpoint('/fba/outbound/2020-07-01/fulfillmentOrders', method='GET')
-    def list_all_fulfillment_orders(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/outbound/2020-07-01/fulfillmentOrders', method=u'GET')
+    def list_all_fulfillment_orders(self, **kwargs):
+        u"""
         list_all_fulfillment_orders(self, **kwargs) -> ApiResponse
 
         Returns a list of fulfillment orders fulfilled after (or at) a specified date-time, or indicated by the next token parameter.
@@ -142,12 +143,12 @@ class FulfillmentOutbound(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop(u'path'),  params=kwargs)
     
 
-    @sp_endpoint('/fba/outbound/2020-07-01/fulfillmentOrders', method='POST')
-    def create_fulfillment_order(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/outbound/2020-07-01/fulfillmentOrders', method=u'POST')
+    def create_fulfillment_order(self, **kwargs):
+        u"""
         create_fulfillment_order(self, **kwargs) -> ApiResponse
 
         Requests that Amazon ship items from the seller's inventory in Amazon's fulfillment network to a destination address.
@@ -328,12 +329,12 @@ class FulfillmentOutbound(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop(u'path'),  data=kwargs)
     
 
-    @sp_endpoint('/fba/outbound/2020-07-01/tracking', method='GET')
-    def get_package_tracking_details(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/outbound/2020-07-01/tracking', method=u'GET')
+    def get_package_tracking_details(self, **kwargs):
+        u"""
         get_package_tracking_details(self, **kwargs) -> ApiResponse
 
         Returns delivery tracking information for a package in an outbound shipment for a Multi-Channel Fulfillment order.
@@ -355,12 +356,12 @@ class FulfillmentOutbound(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop(u'path'),  params=kwargs)
     
 
-    @sp_endpoint('/fba/outbound/2020-07-01/returnReasonCodes', method='GET')
-    def list_return_reason_codes(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/outbound/2020-07-01/returnReasonCodes', method=u'GET')
+    def list_return_reason_codes(self, **kwargs):
+        u"""
         list_return_reason_codes(self, **kwargs) -> ApiResponse
 
         Returns a list of return reason codes for a seller SKU in a given marketplace.
@@ -386,12 +387,12 @@ class FulfillmentOutbound(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop(u'path'),  params=kwargs)
     
 
-    @sp_endpoint('/fba/outbound/2020-07-01/fulfillmentOrders/{}/return', method='PUT')
-    def create_fulfillment_return(self, sellerFulfillmentOrderId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/outbound/2020-07-01/fulfillmentOrders/{}/return', method=u'PUT')
+    def create_fulfillment_return(self, sellerFulfillmentOrderId, **kwargs):
+        u"""
         create_fulfillment_return(self, sellerFulfillmentOrderId, **kwargs) -> ApiResponse
 
         Creates a fulfillment return. 
@@ -441,12 +442,12 @@ class FulfillmentOutbound(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), sellerFulfillmentOrderId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), sellerFulfillmentOrderId), data=kwargs)
     
 
-    @sp_endpoint('/fba/outbound/2020-07-01/fulfillmentOrders/{}', method='GET')
-    def get_fulfillment_order(self, sellerFulfillmentOrderId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/outbound/2020-07-01/fulfillmentOrders/{}', method=u'GET')
+    def get_fulfillment_order(self, sellerFulfillmentOrderId, **kwargs):
+        u"""
         get_fulfillment_order(self, sellerFulfillmentOrderId, **kwargs) -> ApiResponse
 
         Returns the fulfillment order indicated by the specified order identifier.
@@ -468,12 +469,12 @@ class FulfillmentOutbound(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), sellerFulfillmentOrderId), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), sellerFulfillmentOrderId), params=kwargs)
     
 
-    @sp_endpoint('/fba/outbound/2020-07-01/fulfillmentOrders/{}', method='PUT')
-    def update_fulfillment_order(self, sellerFulfillmentOrderId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/outbound/2020-07-01/fulfillmentOrders/{}', method=u'PUT')
+    def update_fulfillment_order(self, sellerFulfillmentOrderId, **kwargs):
+        u"""
         update_fulfillment_order(self, sellerFulfillmentOrderId, **kwargs) -> ApiResponse
 
         Updates and/or requests shipment for a fulfillment order with an order hold on it.
@@ -610,12 +611,12 @@ class FulfillmentOutbound(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), sellerFulfillmentOrderId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), sellerFulfillmentOrderId), data=kwargs)
     
 
-    @sp_endpoint('/fba/outbound/2020-07-01/fulfillmentOrders/{}/cancel', method='PUT')
-    def cancel_fulfillment_order(self, sellerFulfillmentOrderId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/outbound/2020-07-01/fulfillmentOrders/{}/cancel', method=u'PUT')
+    def cancel_fulfillment_order(self, sellerFulfillmentOrderId, **kwargs):
+        u"""
         cancel_fulfillment_order(self, sellerFulfillmentOrderId, **kwargs) -> ApiResponse
 
         Requests that Amazon stop attempting to fulfill the fulfillment order indicated by the specified order identifier.
@@ -638,12 +639,12 @@ class FulfillmentOutbound(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), sellerFulfillmentOrderId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), sellerFulfillmentOrderId), data=kwargs)
     
 
-    @sp_endpoint('/fba/outbound/2020-07-01/features', method='GET')
-    def get_features(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/outbound/2020-07-01/features', method=u'GET')
+    def get_features(self, **kwargs):
+        u"""
         get_features(self, **kwargs) -> ApiResponse
 
         Returns a list of features available for Multi-Channel Fulfillment orders in the marketplace you specify, and whether the seller for which you made the call is enrolled for each feature.
@@ -666,12 +667,12 @@ class FulfillmentOutbound(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop(u'path'),  params=kwargs)
     
 
-    @sp_endpoint('/fba/outbound/2020-07-01/features/inventory/{}', method='GET')
-    def get_feature_inventory(self, featureName, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/outbound/2020-07-01/features/inventory/{}', method=u'GET')
+    def get_feature_inventory(self, featureName, **kwargs):
+        u"""
         get_feature_inventory(self, featureName, **kwargs) -> ApiResponse
 
         Returns a list of inventory items that are eligible for the fulfillment feature you specify.
@@ -695,12 +696,12 @@ class FulfillmentOutbound(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), featureName), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), featureName), params=kwargs)
     
 
-    @sp_endpoint('/fba/outbound/2020-07-01/features/inventory/{}', method='GET')
-    def get_feature_s_k_u(self, featureName, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/outbound/2020-07-01/features/inventory/{}', method=u'GET')
+    def get_feature_s_k_u(self, featureName, **kwargs):
+        u"""
         get_feature_s_k_u(self, featureName, **kwargs) -> ApiResponse
 
         Returns the number of items with the sellerSKU you specify that can have orders fulfilled using the specified feature. Note that if the sellerSKU isn't eligible, the response will contain an empty skuInfo object.
@@ -725,5 +726,5 @@ class FulfillmentOutbound(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), featureName), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), featureName), params=kwargs)
     

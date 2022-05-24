@@ -1,10 +1,11 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class ListingsRestrictions(Client):
-    """
+    u"""
     ListingsRestrictions SP-API Client
 
     The Selling Partner API for Listings Restrictions provides programmatic access to restrictions on Amazon catalog listings.
@@ -12,9 +13,9 @@ class ListingsRestrictions(Client):
     For more information, see the [Listings Restrictions API Use Case Guide](https://github.com/amzn/selling-partner-api-docs/blob/main/guides/en-US/use-case-guides/listings-restrictions-api-use-case-guide/listings-restrictions-api-use-case-guide_2021-08-01.md).
     """
 
-    @sp_endpoint('/listings/2021-08-01/restrictions', method='GET')
-    def get_listings_restrictions(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/listings/2021-08-01/restrictions', method=u'GET')
+    def get_listings_restrictions(self, **kwargs):
+        u"""
         get_listings_restrictions(self, **kwargs) -> ApiResponse
 
         Returns listing restrictions for an item in the Amazon Catalog. 
@@ -32,5 +33,5 @@ class ListingsRestrictions(Client):
             ApiResponse
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop(u'path'),  params=kwargs)
     

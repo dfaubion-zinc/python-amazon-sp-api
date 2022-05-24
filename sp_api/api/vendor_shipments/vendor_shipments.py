@@ -1,10 +1,11 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class VendorShipments(Client):
-    """
+    u"""
     VendorShipments SP-API Client
     :link: 
 
@@ -12,9 +13,9 @@ class VendorShipments(Client):
     """
 
 
-    @sp_endpoint('/vendor/shipping/v1/shipmentConfirmations', method='POST')
-    def submit_shipment_confirmations(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/shipping/v1/shipmentConfirmations', method=u'POST')
+    def submit_shipment_confirmations(self, **kwargs):
+        u"""
         submit_shipment_confirmations(self, **kwargs) -> ApiResponse
 
         Submits one or more shipment confirmations for vendor orders.
@@ -284,5 +285,5 @@ class VendorShipments(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop(u'path'),  data=kwargs)
     

@@ -1,4 +1,5 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 import zlib
 
 import requests
@@ -6,17 +7,27 @@ import requests
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
-class Feeds(Client):
+def merge_dicts(*dict_args):
     """
+    Given any number of dictionaries, shallow copy and merge into a new dict,
+    precedence goes to key-value pairs in latter dictionaries.
+    """
+    result = {}
+    for dictionary in dict_args:
+        result.update(dictionary)
+    return result
+
+class Feeds(Client):
+    u"""
     Feeds SP-API Client
     :link: 
 
     The Selling Partner API for Feeds lets you upload data to Amazon on behalf of a selling partner.
     """
 
-    @sp_endpoint('/feeds/2021-06-30/feeds', method='GET')
-    def get_feeds(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/feeds/2021-06-30/feeds', method=u'GET')
+    def get_feeds(self, **kwargs):
+        u"""
         get_feeds(self, **kwargs) -> ApiResponse
 
         Returns feed details for the feeds that match the filters that you specify.
@@ -35,10 +46,10 @@ class Feeds(Client):
             ApiResponse:
         """
 
-        return self._request(kwargs.pop('path'), params=kwargs)
+        return self._request(kwargs.pop(u'path'), params=kwargs)
 
-    def submit_feed(self, feed_type, file, content_type='text/tsv', **kwargs) -> [ApiResponse, ApiResponse]:
-        """
+    def submit_feed(self, feed_type, file, content_type=u'text/tsv', **kwargs):
+        u"""
         submit_feed(self, feed_type: str, file: File or File like, content_type='text/tsv', **kwargs) -> [ApiResponse, ApiResponse]
         Combines `create_feed_document` and `create_feed`, uploads the file and sends the feed to amazon.
 
@@ -69,11 +80,11 @@ class Feeds(Client):
             [ApiResponse:, ApiResponse:]
         """
         document_response = self.create_feed_document(file, content_type)
-        return document_response, self.create_feed(feed_type, document_response.payload.get('feedDocumentId'), **kwargs)
+        return document_response, self.create_feed(feed_type, document_response.payload.get(u'feedDocumentId'), kwargs.copy())
 
-    @sp_endpoint('/feeds/2021-06-30/feeds', method='POST')
-    def create_feed(self, feed_type, input_feed_document_id, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/feeds/2021-06-30/feeds', method=u'POST')
+    def create_feed(self, feed_type, input_feed_document_id, **kwargs):
+        u"""
         create_feed(self, feed_type: str, input_feed_document_id: str, **kwargs) -> ApiResponse
 
         Creates a feed. Call `create_feed_document` to upload the feed first.
@@ -103,16 +114,16 @@ class Feeds(Client):
         Returns:
             ApiResponse:
         """
-        data = {
-            'feedType': feed_type,
-            'inputFeedDocumentId': input_feed_document_id,
-            **kwargs
-        }
-        return self._request(kwargs.pop('path'), data=data)
+        data = dict(
+            kwargs,
+            feedType=feed_type,
+            inputFeedDocumentId=input_feed_document_id,
+        )
+        return self._request(kwargs.pop(u'path'), data=data)
 
-    @sp_endpoint('/feeds/2021-06-30/feeds/{}', method='DELETE')
-    def cancel_feed(self, feedId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/feeds/2021-06-30/feeds/{}', method=u'DELETE')
+    def cancel_feed(self, feedId, **kwargs):
+        u"""
         cancel_feed(self, feedId, **kwargs) -> ApiResponse
 
         Cancels the feed that you specify. Only feeds with processingStatus=IN_QUEUE can be cancelled. Cancelled feeds are returned in subsequent calls to the getFeed and getFeeds operations.
@@ -126,11 +137,11 @@ class Feeds(Client):
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), feedId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), feedId), data=kwargs)
 
-    @sp_endpoint('/feeds/2021-06-30/feeds/{}', method='GET')
-    def get_feed(self, feedId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/feeds/2021-06-30/feeds/{}', method=u'GET')
+    def get_feed(self, feedId, **kwargs):
+        u"""
         get_feed(self, feedId, **kwargs) -> ApiResponse
 
         Returns feed details (including the resultDocumentId, if available) for the feed that you specify.
@@ -144,11 +155,11 @@ class Feeds(Client):
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), feedId), params=kwargs, add_marketplace=False)
+        return self._request(fill_query_params(kwargs.pop(u'path'), feedId), params=kwargs, add_marketplace=False)
 
-    @sp_endpoint('/feeds/2021-06-30/documents', method='POST')
-    def create_feed_document(self, file, content_type, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/feeds/2021-06-30/documents', method=u'POST')
+    def create_feed_document(self, file, content_type, **kwargs):
+        u"""
         create_feed_document(self, **kwargs) -> ApiResponse
 
         Creates a feed document for the feed type that you specify. This operation returns a presigned URL for uploading the feed document contents. It also returns a feedDocumentId value that you can pass in with a subsequent call to the createFeed operation.
@@ -165,27 +176,27 @@ class Feeds(Client):
             ApiResponse:
         """
         data = {
-            'contentType': kwargs.get('contentType', content_type)
+            u'contentType': kwargs.get(u'contentType', content_type)
         }
-        response = self._request(kwargs.get('path'), data={**data, **kwargs})
+        response = self._request(kwargs.get(u'path'), data=merge_dicts(data, kwargs))
         upload_data = file.read()
         try:
-            upload_data = upload_data.decode('iso-8859-1')
+            upload_data = upload_data.decode(u'iso-8859-1')
         except AttributeError:
             pass
         upload = requests.put(
-            response.payload.get('url'),
+            response.payload.get(u'url'),
             data=upload_data,
-            headers={'Content-Type': content_type}
+            headers={u'Content-Type': content_type}
         )
         if 200 <= upload.status_code < 300:
             return response
         from sp_api.base.exceptions import SellingApiException
-        raise SellingApiException(headers=upload.headers, error=upload.json().get('errors'))
+        raise SellingApiException(headers=upload.headers, error=upload.json().get(u'errors'))
 
-    @sp_endpoint('/feeds/2021-06-30/documents/{}', method='GET')
-    def get_feed_document(self, feedDocumentId, **kwargs) -> str:
-        """
+    @sp_endpoint(u'/feeds/2021-06-30/documents/{}', method=u'GET')
+    def get_feed_document(self, feedDocumentId, **kwargs):
+        u"""
         get_feed_document(self, feedDocumentId, **kwargs) -> ApiResponse
 
         Returns the information required for retrieving a feed document's contents.
@@ -203,9 +214,9 @@ class Feeds(Client):
 
         return self.get_feed_result_document(feedDocumentId)
 
-    @sp_endpoint('/feeds/2021-06-30/documents/{}', method='GET')
-    def get_feed_result_document(self, feedDocumentId, **kwargs) -> str:
-        """
+    @sp_endpoint(u'/feeds/2021-06-30/documents/{}', method=u'GET')
+    def get_feed_result_document(self, feedDocumentId, **kwargs):
+        u"""
         get_feed_result_document(self, feedDocumentId, **kwargs) -> str
 
         Returns the information required for retrieving a feed document's contents.
@@ -219,10 +230,10 @@ class Feeds(Client):
         Returns:
             ApiResponse:
         """
-        response = self._request(fill_query_params(kwargs.pop('path'), feedDocumentId), params=kwargs,
+        response = self._request(fill_query_params(kwargs.pop(u'path'), feedDocumentId), params=kwargs,
                                  add_marketplace=False)
-        url = response.payload.get('url')
+        url = response.payload.get(u'url')
         content = requests.get(url).content
-        if 'compressionAlgorithm' in response.payload:
-            return zlib.decompress(bytearray(content), 15 + 32).decode('iso-8859-1')
-        return content.decode('iso-8859-1')
+        if u'compressionAlgorithm' in response.payload:
+            return zlib.decompress(bytearray(content), 15 + 32).decode(u'iso-8859-1')
+        return content.decode(u'iso-8859-1')

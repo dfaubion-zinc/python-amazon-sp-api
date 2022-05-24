@@ -1,20 +1,23 @@
+from __future__ import with_statement
+from __future__ import absolute_import
 from io import BytesIO
 import hashlib
 import base64
 import warnings
 import functools
+from io import open
 
 
 def fill_query_params(query, *args):
     return query.format(*args)
 
 
-def sp_endpoint(path, method='GET'):
+def sp_endpoint(path, method=u'GET'):
     def decorator(function):
         def wrapper(*args, **kwargs):
             kwargs.update({
-                'path': path,
-                'method': method
+                u'path': path,
+                u'method': method
             })
             return function(*args, **kwargs)
 
@@ -27,22 +30,22 @@ def sp_endpoint(path, method='GET'):
 def create_md5(file):
     hash_md5 = hashlib.md5()
     if isinstance(file, BytesIO):
-        for chunk in iter(lambda: file.read(4096), b''):
+        for chunk in iter(lambda: file.read(4096), ''):
             hash_md5.update(chunk)
         file.seek(0)
         return base64.b64encode(hash_md5.digest()).decode()
-    if isinstance(file, str):
-        with open(file, "rb") as f:
-            for chunk in iter(lambda: f.read(4096), b''):
+    if isinstance(file, unicode):
+        with open(file, u"rb") as f:
+            for chunk in iter(lambda: f.read(4096), ''):
                 hash_md5.update(chunk)
         return base64.b64encode(hash_md5.digest()).decode()
-    for chunk in iter(lambda: file.read(4096), b''):
+    for chunk in iter(lambda: file.read(4096), ''):
         hash_md5.update(chunk)
     return base64.b64encode(hash_md5.digest()).decode()
 
 
-def nest_dict(flat: dict()):
-    """
+def nest_dict(flat):
+    u"""
     Convert flat dictionary to nested dictionary.
 
     Input
@@ -76,7 +79,7 @@ def nest_dict(flat: dict()):
 
 
 def _nest_dict_rec(k, v, out):
-    k, *rest = k.split('.', 1)
+    k, rest = k.split(u'.', 1)
     if rest:
         _nest_dict_rec(rest[0], v, out.setdefault(k, {}))
     else:
@@ -84,15 +87,15 @@ def _nest_dict_rec(k, v, out):
 
 
 def deprecated(func):
-    """This is a decorator which can be used to mark functions
+    u"""This is a decorator which can be used to mark functions
     as deprecated. It will result in a warning being emitted
     when the function is used."""
     @functools.wraps(func)
     def new_func(*args, **kwargs):
-        warnings.simplefilter('always', DeprecationWarning)  # turn off filter
-        warnings.warn("Call to deprecated function {}.".format(func.__name__),
+        warnings.simplefilter(u'always', DeprecationWarning)  # turn off filter
+        warnings.warn(u"Call to deprecated function {}.".format(func.__name__),
                       category=DeprecationWarning,
                       stacklevel=2)
-        warnings.simplefilter('default', DeprecationWarning)  # reset filter
+        warnings.simplefilter(u'default', DeprecationWarning)  # reset filter
         return func(*args, **kwargs)
     return new_func

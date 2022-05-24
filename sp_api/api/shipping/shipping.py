@@ -1,10 +1,11 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class Shipping(Client):
-    """
+    u"""
     Shipping SP-API Client
     :link: 
 
@@ -12,9 +13,9 @@ class Shipping(Client):
     """
 
 
-    @sp_endpoint('/shipping/v1/shipments', method='POST')
-    def create_shipment(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/shipping/v1/shipments', method=u'POST')
+    def create_shipment(self, **kwargs):
+        u"""
         create_shipment(self, **kwargs) -> ApiResponse
 
         Create a new shipment.
@@ -102,11 +103,11 @@ class Shipping(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop(u'path'),  data=kwargs)
 
-    @sp_endpoint('/shipping/v1/shipments/{}', method='GET')
-    def get_shipment(self, shipmentId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/shipping/v1/shipments/{}', method=u'GET')
+    def get_shipment(self, shipmentId, **kwargs):
+        u"""
         get_shipment(self, shipmentId, **kwargs) -> ApiResponse
 
         Return the entire shipment object for the shipmentId.
@@ -128,11 +129,11 @@ class Shipping(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), shipmentId), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), shipmentId), params=kwargs)
 
-    @sp_endpoint('/shipping/v1/shipments/{}/cancel', method='POST')
-    def cancel_shipment(self, shipmentId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/shipping/v1/shipments/{}/cancel', method=u'POST')
+    def cancel_shipment(self, shipmentId, **kwargs):
+        u"""
         cancel_shipment(self, shipmentId, **kwargs) -> ApiResponse
 
         Cancel a shipment by the given shipmentId.
@@ -155,12 +156,12 @@ class Shipping(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), shipmentId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), shipmentId), data=kwargs)
     
 
-    @sp_endpoint('/shipping/v1/shipments/{}/purchaseLabels', method='POST')
-    def purchase_labels(self, shipmentId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/shipping/v1/shipments/{}/purchaseLabels', method=u'POST')
+    def purchase_labels(self, shipmentId, **kwargs):
+        u"""
         purchase_labels(self, shipmentId, **kwargs) -> ApiResponse
 
         Purchase shipping labels based on a given rate.
@@ -191,12 +192,12 @@ class Shipping(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), shipmentId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), shipmentId), data=kwargs)
     
 
-    @sp_endpoint('/shipping/v1/shipments/{}/label', method='POST')
-    def retrieve_shipping_label(self, shipmentId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/shipping/v1/shipments/{}/label', method=u'POST')
+    def retrieve_shipping_label(self, shipmentId, **kwargs):
+        u"""
         retrieve_shipping_label(self, shipmentId, **kwargs) -> ApiResponse
 
         Retrieve shipping label based on the shipment id and tracking id.
@@ -225,12 +226,12 @@ class Shipping(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), shipmentId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), shipmentId), data=kwargs)
     
 
-    @sp_endpoint('/shipping/v1/purchaseShipment', method='POST')
-    def purchase_shipment(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/shipping/v1/purchaseShipment', method=u'POST')
+    def purchase_shipment(self, **kwargs):
+        u"""
         purchase_shipment(self, **kwargs) -> ApiResponse
 
         Purchase shipping labels.
@@ -324,12 +325,12 @@ class Shipping(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop(u'path'),  data=kwargs)
     
 
-    @sp_endpoint('/shipping/v1/rates', method='POST')
-    def get_rates(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/shipping/v1/rates', method=u'POST')
+    def get_rates(self, **kwargs):
+        u"""
         get_rates(self, **kwargs) -> ApiResponse
 
         Get service rates.
@@ -400,12 +401,12 @@ class Shipping(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop(u'path'),  data=kwargs)
     
 
-    @sp_endpoint('/shipping/v1/account', method='GET')
-    def get_account(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/shipping/v1/account', method=u'GET')
+    def get_account(self, **kwargs):
+        u"""
         get_account(self, **kwargs) -> ApiResponse
 
         Verify if the current account is valid.
@@ -424,12 +425,12 @@ class Shipping(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop(u'path'),  params=kwargs)
     
 
-    @sp_endpoint('/shipping/v1/tracking/{}', method='GET')
-    def get_tracking_information(self, trackingId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/shipping/v1/tracking/{}', method=u'GET')
+    def get_tracking_information(self, trackingId, **kwargs):
+        u"""
         get_tracking_information(self, trackingId, **kwargs) -> ApiResponse
 
         Return the tracking information of a shipment.
@@ -452,5 +453,5 @@ class Shipping(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), trackingId), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), trackingId), params=kwargs)
     

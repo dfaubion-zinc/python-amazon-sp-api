@@ -1,10 +1,11 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class VendorDirectFulfillmentOrders(Client):
-    """
+    u"""
     VendorDirectFulfillmentOrders SP-API Client
     :link: 
 
@@ -12,9 +13,9 @@ class VendorDirectFulfillmentOrders(Client):
     """
 
 
-    @sp_endpoint('/vendor/directFulfillment/orders/v1/purchaseOrders', method='GET')
-    def get_orders(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/directFulfillment/orders/v1/purchaseOrders', method=u'GET')
+    def get_orders(self, **kwargs):
+        u"""
         get_orders(self, **kwargs) -> ApiResponse
 
         Returns a list of purchase orders created during the time frame that you specify. You define the time frame using the createdAfter and createdBefore parameters. You must use both parameters. You can choose to get only the purchase order numbers by setting the includeDetails parameter to false. In that case, the operation returns a list of purchase order numbers. You can then call the getOrder operation to return the details of a specific order.
@@ -43,12 +44,12 @@ class VendorDirectFulfillmentOrders(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop(u'path'),  params=kwargs)
     
 
-    @sp_endpoint('/vendor/directFulfillment/orders/v1/purchaseOrders/{}', method='GET')
-    def get_order(self, purchaseOrderNumber, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/directFulfillment/orders/v1/purchaseOrders/{}', method=u'GET')
+    def get_order(self, purchaseOrderNumber, **kwargs):
+        u"""
         get_order(self, purchaseOrderNumber, **kwargs) -> ApiResponse
 
         Returns purchase order information for the purchaseOrderNumber that you specify.
@@ -70,12 +71,12 @@ class VendorDirectFulfillmentOrders(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), purchaseOrderNumber), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), purchaseOrderNumber), params=kwargs)
     
 
-    @sp_endpoint('/vendor/directFulfillment/orders/v1/acknowledgements', method='POST')
-    def submit_acknowledgement(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/directFulfillment/orders/v1/acknowledgements', method=u'POST')
+    def submit_acknowledgement(self, **kwargs):
+        u"""
         submit_acknowledgement(self, **kwargs) -> ApiResponse
 
         Submits acknowledgements for one or more purchase orders.
@@ -193,5 +194,5 @@ class VendorDirectFulfillmentOrders(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs, add_marketplace=False)
+        return self._request(kwargs.pop(u'path'),  data=kwargs, add_marketplace=False)
     

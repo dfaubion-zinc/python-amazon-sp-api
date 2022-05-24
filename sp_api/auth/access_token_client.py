@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import json
 import os
 
@@ -20,9 +21,9 @@ logger = logging.getLogger(__name__)
 
 
 class AccessTokenClient(BaseClient):
-    host = 'api.amazon.com'
-    grant_type = 'refresh_token'
-    path = '/auth/o2/token'
+    host = u'api.amazon.com'
+    grant_type = u'refresh_token'
+    path = u'/auth/o2/token'
 
     def __init__(self, refresh_token=None, credentials=None):
         self.cred = Credentials(refresh_token, credentials)
@@ -31,13 +32,13 @@ class AccessTokenClient(BaseClient):
         response = requests.post(url, data=data, headers=headers)
         response_data = response.json()
         if response.status_code != 200:
-            error_message = response_data.get('error_description')
-            error_code = response_data.get('error')
+            error_message = response_data.get(u'error_description')
+            error_code = response_data.get(u'error')
             raise AuthorizationError(error_code, error_message, response.status_code)
         return response_data
 
-    def get_auth(self) -> AccessTokenResponse:
-        """
+    def get_auth(self):
+        u"""
         Get's the access token
         :return:AccessTokenResponse
         """
@@ -53,13 +54,13 @@ class AccessTokenClient(BaseClient):
                 request_url = self.scheme + self.host + self.path
                 access_token = self._request(request_url, self.data, self.headers)
             else:
-                cache_ttl = access_token.get('expires_in')
+                cache_ttl = access_token.get(u'expires_in')
             cache = TTLCache(maxsize=10, ttl=cache_ttl - 15)
             cache[cache_key] = access_token
         return AccessTokenResponse(**access_token)
 
-    def get_grantless_auth(self, scope='sellingpartnerapi::notifications'):
-        """
+    def get_grantless_auth(self, scope=u'sellingpartnerapi::notifications'):
+        u"""
         :param scope: One of allowed scope for grantless operations:
             sellingpartnerapi::notifications or sellingpartnerapi::migration
             See: https://github.com/amzn/selling-partner-api-docs/blob/main/guides/en-US/developer-guide/SellingPartnerApiDeveloperGuide.md#step-3-configure-your-lwa-credentials
@@ -77,7 +78,7 @@ class AccessTokenClient(BaseClient):
         cache_key = self._get_cache_key(scope)
         try:
             access_token = grantless_cache[cache_key]
-            logger.debug('from_cache. scope: %s', scope)
+            logger.debug(u'from_cache. scope: %s', scope)
         except KeyError:
             request_url = self.scheme + self.host + self.path
             access_token = self._request(
@@ -85,7 +86,7 @@ class AccessTokenClient(BaseClient):
                 data=self.grantless_data(scope),
                 headers=self.headers
             )
-            logger.debug('token_refreshed')
+            logger.debug(u'token_refreshed')
             grantless_cache.clear()
             grantless_cache[cache_key] = access_token
 
@@ -102,38 +103,38 @@ class AccessTokenClient(BaseClient):
 
     def _auth_code_request_body(self, auth_code):
         return {
-            'grant_type': 'authorization_code',
-            'code': auth_code,
-            'client_id': self.cred.client_id,
-            'client_secret': self.cred.client_secret
+            u'grant_type': u'authorization_code',
+            u'code': auth_code,
+            u'client_id': self.cred.client_id,
+            u'client_secret': self.cred.client_secret
         }
 
-    def grantless_data(self, scope_value: str):
+    def grantless_data(self, scope_value):
         return {
-            'grant_type': 'client_credentials',
-            'client_id': self.cred.client_id,
-            'scope': scope_value,
-            'client_secret': self.cred.client_secret
+            u'grant_type': u'client_credentials',
+            u'client_id': self.cred.client_id,
+            u'scope': scope_value,
+            u'client_secret': self.cred.client_secret
         }
 
     @property
     def data(self):
         return {
-            'grant_type': self.grant_type,
-            'client_id': self.cred.client_id,
-            'refresh_token': self.cred.refresh_token,
-            'client_secret': self.cred.client_secret
+            u'grant_type': self.grant_type,
+            u'client_id': self.cred.client_id,
+            u'refresh_token': self.cred.refresh_token,
+            u'client_secret': self.cred.client_secret
         }
 
     @property
     def headers(self):
         return {
-            'User-Agent': self.user_agent,
-            'content-type': self.content_type
+            u'User-Agent': self.user_agent,
+            u'content-type': self.content_type
         }
 
-    def _get_cache_key(self, token_flavor=''):
-        return 'access_token_' + hashlib.md5(
-            (token_flavor + self.cred.refresh_token).encode('utf-8')
+    def _get_cache_key(self, token_flavor=u''):
+        return u'access_token_' + hashlib.md5(
+            (token_flavor + self.cred.refresh_token).encode(u'utf-8')
         ).hexdigest()
 

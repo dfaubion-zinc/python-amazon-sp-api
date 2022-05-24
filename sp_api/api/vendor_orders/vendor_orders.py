@@ -1,10 +1,11 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class VendorOrders(Client):
-    """
+    u"""
     VendorOrders SP-API Client
     :link: 
 
@@ -12,9 +13,9 @@ class VendorOrders(Client):
     """
 
 
-    @sp_endpoint('/vendor/orders/v1/purchaseOrders', method='GET')
-    def get_purchase_orders(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/orders/v1/purchaseOrders', method=u'GET')
+    def get_purchase_orders(self, **kwargs):
+        u"""
         get_purchase_orders(self, **kwargs) -> ApiResponse
 
         Returns a list of purchase orders created or changed during the time frame that you specify. You define the time frame using the createdAfter, createdBefore, changedAfter and changedBefore parameters. The date range to search must not be more than 7 days. You can choose to get only the purchase order numbers by setting includeDetails to false. You can then use the getPurchaseOrder operation to receive details for a specific purchase order.
@@ -47,12 +48,12 @@ class VendorOrders(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop(u'path'),  params=kwargs)
     
 
-    @sp_endpoint('/vendor/orders/v1/purchaseOrders/{}', method='GET')
-    def get_purchase_order(self, purchaseOrderNumber, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/orders/v1/purchaseOrders/{}', method=u'GET')
+    def get_purchase_order(self, purchaseOrderNumber, **kwargs):
+        u"""
         get_purchase_order(self, purchaseOrderNumber, **kwargs) -> ApiResponse
 
         Returns a purchase order based on the purchaseOrderNumber value that you specify.
@@ -75,12 +76,12 @@ class VendorOrders(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), purchaseOrderNumber), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), purchaseOrderNumber), params=kwargs)
     
 
-    @sp_endpoint('/vendor/orders/v1/acknowledgements', method='POST')
-    def submit_acknowledgement(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/orders/v1/acknowledgements', method=u'POST')
+    def submit_acknowledgement(self, **kwargs):
+        u"""
         submit_acknowledgement(self, **kwargs) -> ApiResponse
 
         Submits acknowledgements for one or more purchase orders.
@@ -169,12 +170,12 @@ class VendorOrders(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs, add_marketplace=False)
+        return self._request(kwargs.pop(u'path'),  data=kwargs, add_marketplace=False)
     
 
-    @sp_endpoint('/vendor/orders/v1/purchaseOrdersStatus', method='GET')
-    def get_purchase_orders_status(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/orders/v1/purchaseOrdersStatus', method=u'GET')
+    def get_purchase_orders_status(self, **kwargs):
+        u"""
         get_purchase_orders_status(self, **kwargs) -> ApiResponse
 
         Returns purchase order statuses based on the filters that you specify. Date range to search must not be more than 7 days. You can return a list of purchase order statuses using the available filters, or a single purchase order status by providing the purchase order number.
@@ -208,5 +209,5 @@ class VendorOrders(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop(u'path'),  params=kwargs)
     

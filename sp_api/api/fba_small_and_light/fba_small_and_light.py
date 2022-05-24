@@ -1,10 +1,11 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse, deprecated
 
 
 class FbaSmallAndLight(Client):
-    """
+    u"""
     FbaSmallAndLight SP-API Client
     :link: 
 
@@ -12,12 +13,12 @@ class FbaSmallAndLight(Client):
     """
 
     @deprecated
-    def get_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse:
+    def get_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs):
         return self.get_small_and_light_enrollment_by_seller_sku(sellerSKU, **kwargs)
 
-    @sp_endpoint('/fba/smallAndLight/v1/enrollments/{}', method='GET')
-    def get_small_and_light_enrollment_by_seller_sku(self, seller_sku, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/smallAndLight/v1/enrollments/{}', method=u'GET')
+    def get_small_and_light_enrollment_by_seller_sku(self, seller_sku, **kwargs):
+        u"""
         get_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse
 
         Returns the Small and Light enrollment status for the item indicated by the specified seller SKU in the specified marketplace.
@@ -40,15 +41,15 @@ class FbaSmallAndLight(Client):
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), seller_sku), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), seller_sku), params=kwargs)
 
     @deprecated
-    def put_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse:
+    def put_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs):
         return self.put_small_and_light_enrollment_by_seller_sku(sellerSKU, **kwargs)
 
-    @sp_endpoint('/fba/smallAndLight/v1/enrollments/{}', method='PUT')
-    def put_small_and_light_enrollment_by_seller_sku(self, seller_sku, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/smallAndLight/v1/enrollments/{}', method=u'PUT')
+    def put_small_and_light_enrollment_by_seller_sku(self, seller_sku, **kwargs):
+        u"""
         put_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse
 
         Enrolls the item indicated by the specified seller SKU in the Small and Light program in the specified marketplace. If the item is not eligible, the ineligibility reasons are returned.
@@ -72,16 +73,16 @@ class FbaSmallAndLight(Client):
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), seller_sku),
-                             params={'marketplaceIds': kwargs.get('marketplaceIds', self.marketplace_id)})
+        return self._request(fill_query_params(kwargs.pop(u'path'), seller_sku),
+                             params={u'marketplaceIds': kwargs.get(u'marketplaceIds', self.marketplace_id)})
 
     @deprecated
-    def delete_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse:
+    def delete_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs):
         return self.delete_small_and_light_enrollment_by_seller_sku(sellerSKU, **kwargs)
 
-    @sp_endpoint('/fba/smallAndLight/v1/enrollments/{}', method='DELETE')
-    def delete_small_and_light_enrollment_by_seller_sku(self, seller_sku, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/smallAndLight/v1/enrollments/{}', method=u'DELETE')
+    def delete_small_and_light_enrollment_by_seller_sku(self, seller_sku, **kwargs):
+        u"""
         delete_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse
 
         Removes the item indicated by the specified seller SKU from the Small and Light program in the specified marketplace. If the item is not eligible for disenrollment, the ineligibility reasons are returned.
@@ -104,15 +105,15 @@ class FbaSmallAndLight(Client):
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), seller_sku), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), seller_sku), data=kwargs)
 
     @deprecated
-    def get_small_and_light_eligibility_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse:
+    def get_small_and_light_eligibility_by_seller_s_k_u(self, sellerSKU, **kwargs):
         return self.get_small_and_light_eligibility_by_seller_sku(sellerSKU, **kwargs)
 
-    @sp_endpoint('/fba/smallAndLight/v1/eligibilities/{}', method='GET')
-    def get_small_and_light_eligibility_by_seller_sku(self, seller_sku, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/smallAndLight/v1/eligibilities/{}', method=u'GET')
+    def get_small_and_light_eligibility_by_seller_sku(self, seller_sku, **kwargs):
+        u"""
         get_small_and_light_eligibility_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse
 
         Returns the Small and Light program eligibility status of the item indicated by the specified seller SKU in the specified marketplace. If the item is not eligible, the ineligibility reasons are returned.
@@ -136,11 +137,11 @@ class FbaSmallAndLight(Client):
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), seller_sku), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), seller_sku), params=kwargs)
 
-    @sp_endpoint('/fba/smallAndLight/v1/feePreviews', method='POST')
-    def get_small_and_light_fee_preview(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/smallAndLight/v1/feePreviews', method=u'POST')
+    def get_small_and_light_fee_preview(self, **kwargs):
+        u"""
         get_small_and_light_fee_preview(self, **kwargs) -> ApiResponse
 
         Returns the Small and Light fee estimates for the specified items. You must include a marketplaceId parameter to retrieve the proper fee estimates for items to be sold in that marketplace. The ordering of items in the response will mirror the order of the items in the request. Duplicate ASIN/price combinations are removed.
@@ -175,4 +176,4 @@ class FbaSmallAndLight(Client):
             ApiResponse:
         """
 
-        return self._request(kwargs.pop('path'), data=kwargs)
+        return self._request(kwargs.pop(u'path'), data=kwargs)

@@ -1,10 +1,11 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, IneligibilityReasonList, ApiResponse
 
 
 class FbaInboundEligibility(Client):
-    """
+    u"""
     FbaInboundEligibility SP-API Client
     :link: 
 
@@ -12,9 +13,9 @@ class FbaInboundEligibility(Client):
     """
 
 
-    @sp_endpoint('/fba/inbound/v1/eligibility/itemPreview', method='GET')
-    def get_item_eligibility_preview(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/inbound/v1/eligibility/itemPreview', method=u'GET')
+    def get_item_eligibility_preview(self, **kwargs):
+        u"""
         get_item_eligibility_preview(self, **kwargs) -> ApiResponse
 
         This operation gets an eligibility preview for an item that you specify. You can specify the type of eligibility preview that you want (INBOUND or COMMINGLING). For INBOUND previews, you can specify the marketplace in which you want to determine the item's eligibility.
@@ -39,11 +40,11 @@ class FbaInboundEligibility(Client):
         Returns:
             ApiResponse:
         """
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop(u'path'),  params=kwargs)
 
-    @sp_endpoint('/fba/inbound/v1/eligibility/itemPreview', method='GET')
-    def get_item_eligibility_preview_extended(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/fba/inbound/v1/eligibility/itemPreview', method=u'GET')
+    def get_item_eligibility_preview_extended(self, **kwargs):
+        u"""
         get_item_eligibility_preview_extended(self, **kwargs) -> ApiResponse
 
         This operation gets an eligibility preview for an item that you specify. You can specify the type of eligibility preview that you want (INBOUND or COMMINGLING). For INBOUND previews, you can specify the marketplace in which you want to determine the item's eligibility.
@@ -69,18 +70,18 @@ class FbaInboundEligibility(Client):
             ApiResponse:
         """
 
-        api_response = self._request(kwargs.pop('path'), params=kwargs)
+        api_response = self._request(kwargs.pop(u'path'), params=kwargs)
 
-        if api_response.payload.get("ineligibilityReasonList") and api_response.payload.get("isEligibleForProgram") is False:
-            ineligibility_list = api_response.payload.get("ineligibilityReasonList")
+        if api_response.payload.get(u"ineligibilityReasonList") and api_response.payload.get(u"isEligibleForProgram") is False:
+            ineligibility_list = api_response.payload.get(u"ineligibilityReasonList")
             errors = []
             for ineligibility_option in ineligibility_list:
                 try:
-                    errors.append(ineligibility_option + ": " + IneligibilityReasonList[ineligibility_option].value)
-                except KeyError as error:
+                    errors.append(ineligibility_option + u": " + IneligibilityReasonList[ineligibility_option].value)
+                except KeyError, error:
                     errors.append(error)
             api_response.payload.update({
-                "ineligibilityReasonListMessage": errors
+                u"ineligibilityReasonListMessage": errors
             })
 
         return api_response

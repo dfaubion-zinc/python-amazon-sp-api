@@ -1,10 +1,11 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class VendorDirectFulfillmentShipping(Client):
-    """
+    u"""
     VendorDirectFulfillmentShipping SP-API Client
     :link: 
 
@@ -12,9 +13,9 @@ class VendorDirectFulfillmentShipping(Client):
     """
 
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/shippingLabels', method='GET')
-    def get_shipping_labels(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/directFulfillment/shipping/v1/shippingLabels', method=u'GET')
+    def get_shipping_labels(self, **kwargs):
+        u"""
         get_shipping_labels(self, **kwargs) -> ApiResponse
 
         Returns a list of shipping labels created during the time frame that you specify. You define that time frame using the createdAfter and createdBefore parameters. You must use both of these parameters. The date range to search must not be more than 7 days.
@@ -41,12 +42,12 @@ class VendorDirectFulfillmentShipping(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop(u'path'),  params=kwargs)
     
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/shippingLabels', method='POST')
-    def submit_shipping_label_request(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/directFulfillment/shipping/v1/shippingLabels', method=u'POST')
+    def submit_shipping_label_request(self, **kwargs):
+        u"""
         submit_shipping_label_request(self, **kwargs) -> ApiResponse
 
         Creates a shipping label for a purchase order and returns a transactionId for reference.
@@ -181,12 +182,12 @@ class VendorDirectFulfillmentShipping(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs, add_marketplace=False)
+        return self._request(kwargs.pop(u'path'),  data=kwargs, add_marketplace=False)
     
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/shippingLabels/{}', method='GET')
-    def get_shipping_label(self, purchaseOrderNumber, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/directFulfillment/shipping/v1/shippingLabels/{}', method=u'GET')
+    def get_shipping_label(self, purchaseOrderNumber, **kwargs):
+        u"""
         get_shipping_label(self, purchaseOrderNumber, **kwargs) -> ApiResponse
 
         Returns a shipping label for the purchaseOrderNumber that you specify.
@@ -209,12 +210,12 @@ class VendorDirectFulfillmentShipping(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), purchaseOrderNumber), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), purchaseOrderNumber), params=kwargs)
     
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/shipmentConfirmations', method='POST')
-    def submit_shipment_confirmations(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/directFulfillment/shipping/v1/shipmentConfirmations', method=u'POST')
+    def submit_shipment_confirmations(self, **kwargs):
+        u"""
         submit_shipment_confirmations(self, **kwargs) -> ApiResponse
 
         Submits one or more shipment confirmations for vendor orders.
@@ -367,12 +368,12 @@ class VendorDirectFulfillmentShipping(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs, add_marketplace=False)
+        return self._request(kwargs.pop(u'path'),  data=kwargs, add_marketplace=False)
     
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/shipmentStatusUpdates', method='POST')
-    def submit_shipment_status_updates(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/directFulfillment/shipping/v1/shipmentStatusUpdates', method=u'POST')
+    def submit_shipment_status_updates(self, **kwargs):
+        u"""
         submit_shipment_status_updates(self, **kwargs) -> ApiResponse
 
         This API call is only to be used by Vendor-Own-Carrier (VOC) vendors. Calling this API will submit a shipment status update for the package that a vendor has shipped. It will provide the Amazon customer visibility on their order, when the package is outside of Amazon Network visibility.
@@ -496,12 +497,12 @@ class VendorDirectFulfillmentShipping(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop(u'path'),  data=kwargs)
     
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/customerInvoices', method='GET')
-    def get_customer_invoices(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/directFulfillment/shipping/v1/customerInvoices', method=u'GET')
+    def get_customer_invoices(self, **kwargs):
+        u"""
         get_customer_invoices(self, **kwargs) -> ApiResponse
 
         Returns a list of customer invoices created during a time frame that you specify. You define the  time frame using the createdAfter and createdBefore parameters. You must use both of these parameters. The date range to search must be no more than 7 days.
@@ -529,11 +530,11 @@ class VendorDirectFulfillmentShipping(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop(u'path'),  params=kwargs)
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/customerInvoices/{}', method='GET')
-    def get_customer_invoice(self, purchaseOrderNumber, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/directFulfillment/shipping/v1/customerInvoices/{}', method=u'GET')
+    def get_customer_invoice(self, purchaseOrderNumber, **kwargs):
+        u"""
         get_customer_invoice(self, purchaseOrderNumber, **kwargs) -> ApiResponse
 
         Returns a customer invoice based on the purchaseOrderNumber that you specify.
@@ -556,12 +557,12 @@ class VendorDirectFulfillmentShipping(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), purchaseOrderNumber), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), purchaseOrderNumber), params=kwargs)
     
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/packingSlips', method='GET')
-    def get_packing_slips(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/directFulfillment/shipping/v1/packingSlips', method=u'GET')
+    def get_packing_slips(self, **kwargs):
+        u"""
         get_packing_slips(self, **kwargs) -> ApiResponse
 
         Returns a list of packing slips for the purchase orders that match the criteria specified. Date range to search must not be more than 7 days.
@@ -589,12 +590,12 @@ class VendorDirectFulfillmentShipping(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop(u'path'),  params=kwargs)
     
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/packingSlips/{}', method='GET')
-    def get_packing_slip(self, purchaseOrderNumber, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/directFulfillment/shipping/v1/packingSlips/{}', method=u'GET')
+    def get_packing_slip(self, purchaseOrderNumber, **kwargs):
+        u"""
         get_packing_slip(self, purchaseOrderNumber, **kwargs) -> ApiResponse
 
         Returns a packing slip based on the purchaseOrderNumber that you specify.
@@ -617,5 +618,5 @@ class VendorDirectFulfillmentShipping(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), purchaseOrderNumber), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), purchaseOrderNumber), params=kwargs)
     

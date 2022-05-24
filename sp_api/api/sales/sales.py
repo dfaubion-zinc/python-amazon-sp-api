@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import urllib
 from datetime import datetime
 
@@ -6,13 +7,13 @@ import logging
 
 
 class Sales(Client):
-    """
+    u"""
     :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/sales-api/sales.md#parameters
     """
 
-    @sp_endpoint('/sales/v1/orderMetrics')
-    def get_order_metrics(self, interval: tuple, granularity: Granularity, granularityTimeZone: str = None, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/sales/v1/orderMetrics')
+    def get_order_metrics(self, interval, granularity, granularityTimeZone = None, **kwargs):
+        u"""
         get_order_metrics(self, interval: tuple, granularity: Granularity, granularityTimeZone: str = None, **kwargs) -> ApiResponse
 
         Returns aggregated order metrics for given interval, broken down by granularity, for given buyer type.
@@ -56,18 +57,18 @@ class Sales(Client):
             ApiResponse
         """
         kwargs.update({
-            'interval': '--'.join([self._create_datetime_stamp(_interval) for _interval in interval]),
-            'granularity': granularity.value,
+            u'interval': u'--'.join([self._create_datetime_stamp(_interval) for _interval in interval]),
+            u'granularity': granularity.value,
         })
         if granularityTimeZone:
-            kwargs.update({'granularityTimeZone': granularityTimeZone})
-        if 'sku' in kwargs:
-            kwargs.update({'sku': urllib.parse.quote_plus(kwargs.pop('sku'))})
-        return self._request(kwargs.pop('path'), params=kwargs)
+            kwargs.update({u'granularityTimeZone': granularityTimeZone})
+        if u'sku' in kwargs:
+            kwargs.update({u'sku': urllib.quote_plus(kwargs.pop(u'sku'))})
+        return self._request(kwargs.pop(u'path'), params=kwargs)
 
     @staticmethod
-    def _create_datetime_stamp(datetime_obj: datetime or str):
-        """
+    def _create_datetime_stamp(datetime_obj):
+        u"""
         Create datetimestring
 
         Args:
@@ -76,7 +77,7 @@ class Sales(Client):
         Returns:
 
         """
-        if isinstance(datetime_obj, str):
+        if isinstance(datetime_obj, unicode):
             return datetime_obj
-        fmt = '%Y-%m-%dT%H:%M:%S%z'
-        return datetime_obj.strftime(fmt)[:-2] + ':00'
+        fmt = u'%Y-%m-%dT%H:%M:%S%z'
+        return datetime_obj.strftime(fmt)[:-2] + u':00'

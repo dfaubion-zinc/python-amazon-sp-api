@@ -1,10 +1,11 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class ListingsItems(Client):
-    """
+    u"""
     ListingsItems SP-API Client
     :link: 
 
@@ -13,9 +14,9 @@ class ListingsItems(Client):
 For more information, see the [Listings Items API Use Case Guide](https://github.com/amzn/selling-partner-api-docs/blob/main/guides/en-US/use-case-guides/listings-items-api-use-case-guide/listings-items-api-use-case-guide_2021-08-01.md).
     """
 
-    @sp_endpoint('/listings/2021-08-01/items/{}/{}', method='DELETE')
-    def delete_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/listings/2021-08-01/items/{}/{}', method=u'DELETE')
+    def delete_listings_item(self, sellerId, sku, **kwargs):
+        u"""
         delete_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse
         Delete a listings item for a selling partner.
         **Usage Plans:**
@@ -34,11 +35,11 @@ For more information, see the [Listings Items API Use Case Guide](https://github
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), sellerId, sku), data=kwargs)
 
-    @sp_endpoint('/listings/2021-08-01/items/{}/{}', method='GET')
-    def get_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/listings/2021-08-01/items/{}/{}', method=u'GET')
+    def get_listings_item(self, sellerId, sku, **kwargs):
+        u"""
         get_listings_item(self, sellerId, **kwargs) -> ApiResponse
         Returns details about a listings item for a selling partner.
         **Usage Plan:**
@@ -58,11 +59,11 @@ For more information, see the [Listings Items API Use Case Guide](https://github
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), sellerId, sku), params=kwargs)
 
-    @sp_endpoint('/listings/2021-08-01/items/{}/{}', method='PATCH')
-    def patch_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/listings/2021-08-01/items/{}/{}', method=u'PATCH')
+    def patch_listings_item(self, sellerId, sku, **kwargs):
+        u"""
         patch_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse
         Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.
         **Usage Plans:**
@@ -93,11 +94,11 @@ For more information, see the [Listings Items API Use Case Guide](https://github
          Returns:
             ApiResponse:
         """
-        return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), data=kwargs.pop('body'), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), sellerId, sku), data=kwargs.pop(u'body'), params=kwargs)
 
-    @sp_endpoint('/listings/2021-08-01/items/{}/{}', method='PUT')
-    def put_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/listings/2021-08-01/items/{}/{}', method=u'PUT')
+    def put_listings_item(self, sellerId, sku, **kwargs):
+        u"""
         put_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse
         Creates a new or fully-updates an existing listings item for a selling partner.
         **Usage Plans:**
@@ -122,5 +123,5 @@ For more information, see the [Listings Items API Use Case Guide](https://github
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), data=kwargs.pop('body'), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), sellerId, sku), data=kwargs.pop(u'body'), params=kwargs)
     

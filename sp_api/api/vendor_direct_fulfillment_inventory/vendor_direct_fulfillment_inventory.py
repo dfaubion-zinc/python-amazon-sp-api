@@ -1,10 +1,11 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class VendorDirectFulfillmentInventory(Client):
-    """
+    u"""
     VendorDirectFulfillmentInventory SP-API Client
     :link: 
 
@@ -12,9 +13,9 @@ class VendorDirectFulfillmentInventory(Client):
     """
 
 
-    @sp_endpoint('/vendor/directFulfillment/inventory/v1/warehouses/{}/items', method='POST')
-    def submit_inventory_update(self, warehouseId, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/vendor/directFulfillment/inventory/v1/warehouses/{}/items', method=u'POST')
+    def submit_inventory_update(self, warehouseId, **kwargs):
+        u"""
         submit_inventory_update(self, warehouseId, **kwargs) -> ApiResponse
 
         Submits inventory updates for the specified warehouse for either a partial or full feed of inventory items.
@@ -55,5 +56,5 @@ class VendorDirectFulfillmentInventory(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), warehouseId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), warehouseId), data=kwargs)
     

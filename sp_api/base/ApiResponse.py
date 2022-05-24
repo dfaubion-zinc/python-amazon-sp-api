@@ -1,8 +1,9 @@
+from __future__ import absolute_import
 import pprint
 
 
-class ApiResponse:
-    """
+class ApiResponse(object):
+    u"""
     Api Response
 
     Wrapper around all responses from the API.
@@ -44,12 +45,12 @@ class ApiResponse:
         self.errors = errors
         self.pagination = pagination
         self.headers = headers
-        self.rate_limit = headers.get("x-amzn-RateLimit-Limit")
+        self.rate_limit = headers.get(u"x-amzn-RateLimit-Limit")
         try:
             self.next_token = (
                 nextToken
-                or self.payload.get("NextToken", None)
-                or self.pagination.get("nextToken", None)
+                or self.payload.get(u"NextToken", None)
+                or self.pagination.get(u"nextToken", None)
             )
 
         except AttributeError:

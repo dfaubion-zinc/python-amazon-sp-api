@@ -1,17 +1,18 @@
-import urllib.parse
+from __future__ import absolute_import
+import urllib2, urllib, urlparse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class Catalog(Client):
-    """
+    u"""
     :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/catalog-items-api/catalogItemsV0.md
 
     """
 
-    @sp_endpoint('/catalog/v0/items/{}')
-    def get_item(self, asin: str, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/catalog/v0/items/{}')
+    def get_item(self, asin, **kwargs):
+        u"""
         get_item(self, asin: str, **kwargs) -> ApiResponse
         Returns a specified item and its attributes.
 
@@ -38,11 +39,11 @@ class Catalog(Client):
         Returns:
             GetCatalogItemResponse:
         """
-        return self._request(fill_query_params(kwargs.pop('path'), asin), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), asin), params=kwargs)
 
-    @sp_endpoint('/catalog/v0/items')
-    def list_items(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/catalog/v0/items')
+    def list_items(self, **kwargs):
+        u"""
         list_items(self, **kwargs) -> ApiResponse
         Returns a list of items and their attributes, based on a search query or item identifiers that you specify. When based on a search query, provide the Query parameter and optionally, the QueryContextId parameter. When based on item identifiers, provide a single appropriate parameter based on the identifier type, and specify the associated item value. MarketplaceId is always required.
 
@@ -75,13 +76,13 @@ class Catalog(Client):
         Returns:
             ListCatalogItemsResponse:
         """
-        if 'Query' in kwargs:
-            kwargs.update({'Query': urllib.parse.quote_plus(kwargs.pop('Query'))})
-        return self._request(kwargs.pop('path'), params=kwargs)
+        if u'Query' in kwargs:
+            kwargs.update({u'Query': urllib.quote_plus(kwargs.pop(u'Query'))})
+        return self._request(kwargs.pop(u'path'), params=kwargs)
 
-    @sp_endpoint('/catalog/v0/categories')
-    def list_categories(self, **kwargs) -> ApiResponse:
-        """
+    @sp_endpoint(u'/catalog/v0/categories')
+    def list_categories(self, **kwargs):
+        u"""
         list_categories(self, **kwargs) -> ApiResponse
         Returns the parent categories to which an item belongs, based on the specified ASIN or SellerSKU
 
@@ -104,6 +105,6 @@ class Catalog(Client):
         Returns:
             ListCatalogCategoriesResponse:
         """
-        if 'Query' in kwargs:
-            kwargs.update({'Query': urllib.parse.quote_plus(kwargs.pop('Query'))})
-        return self._request(kwargs.pop('path'), params=kwargs)
+        if u'Query' in kwargs:
+            kwargs.update({u'Query': urllib.quote_plus(kwargs.pop(u'Query'))})
+        return self._request(kwargs.pop(u'path'), params=kwargs)

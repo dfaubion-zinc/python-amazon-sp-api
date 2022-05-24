@@ -1,9 +1,9 @@
+from __future__ import absolute_import
 import hashlib
 import json
 from datetime import datetime
 import logging
 import os
-from json import JSONDecodeError
 
 import boto3
 from cachetools import TTLCache
@@ -24,15 +24,15 @@ role_cache = TTLCache(maxsize=10, ttl=3600)
 
 class Client(BaseClient):
     boto3_client = None
-    grantless_scope: str = ''
-    keep_restricted_data_token: bool = False
+    grantless_scope = u''
+    keep_restricted_data_token = False
 
     def __init__(
             self,
-            marketplace: Marketplaces = Marketplaces[os.environ.get('SP_API_DEFAULT_MARKETPLACE', Marketplaces.US.name)],
-            *,
+            marketplace = getattr(Marketplaces, os.environ.get(u'SP_API_DEFAULT_MARKETPLACE', u'US')),
+            #*,
             refresh_token=None,
-            account='default',
+            account=u'default',
             credentials=None,
             restricted_data_token=None,
             proxies=None
@@ -40,7 +40,7 @@ class Client(BaseClient):
         self.credentials = CredentialProvider(account, credentials).credentials
         session = boto3.session.Session()
         self.boto3_client = session.client(
-            'sts',
+            u'sts',
             aws_access_key_id=self.credentials.aws_access_key,
             aws_secret_access_key=self.credentials.aws_secret_key
         )
@@ -51,15 +51,15 @@ class Client(BaseClient):
         self._auth = AccessTokenClient(refresh_token=refresh_token, credentials=self.credentials)
         self.proxies = proxies
 
-    def _get_cache_key(self, token_flavor=''):
-        return 'role_' + hashlib.md5(
-            (token_flavor + self._auth.cred.refresh_token).encode('utf-8')
+    def _get_cache_key(self, token_flavor=u''):
+        return u'role_' + hashlib.md5(
+            (token_flavor + self._auth.cred.refresh_token).encode(u'utf-8')
         ).hexdigest()
 
-    def set_role(self, cache_key='role'):
+    def set_role(self, cache_key=u'role'):
         role = self.boto3_client.assume_role(
             RoleArn=self.credentials.role_arn,
-            RoleSessionName='guid'
+            RoleSessionName=u'guid'
         )
         role_cache[cache_key] = role
         return role
@@ -67,21 +67,21 @@ class Client(BaseClient):
     @property
     def headers(self):
         return {
-            'host': self.endpoint[8:],
-            'user-agent': self.user_agent,
-            'x-amz-access-token': self.restricted_data_token or self.auth.access_token,
-            'x-amz-date': datetime.utcnow().strftime('%Y%m%dT%H%M%SZ'),
-            'content-type': 'application/json'
+            u'host': self.endpoint[8:],
+            u'user-agent': self.user_agent,
+            u'x-amz-access-token': self.restricted_data_token or self.auth.access_token,
+            u'x-amz-date': datetime.utcnow().strftime(u'%Y%m%dT%H%M%SZ'),
+            u'content-type': u'application/json'
         }
 
     @property
-    def auth(self) -> AccessTokenResponse:
+    def auth(self):
         return self._auth.get_auth()
 
     @property
-    def grantless_auth(self) -> AccessTokenResponse:
+    def grantless_auth(self):
         if not self.grantless_scope:
-            raise MissingScopeException("Grantless operations require scope")
+            raise MissingScopeException(u"Grantless operations require scope")
         return self._auth.get_grantless_auth(self.grantless_scope)
 
     @property
@@ -91,7 +91,7 @@ class Client(BaseClient):
             role = role_cache[cache_key]
         except KeyError:
             role = self.set_role(cache_key)
-        return role.get('Credentials')
+        return role.get(u'Credentials')
 
     def _sign_request(self):
         aws_session_token = None
@@ -99,71 +99,70 @@ class Client(BaseClient):
         aws_secret_access_key = self.credentials.aws_secret_key
         if self.credentials.role_arn:
             role = self.role
-            aws_session_token = role.get('SessionToken')
-            aws_access_key_id = role.get('AccessKeyId')
-            aws_secret_access_key = role.get('SecretAccessKey')
-        return AWSSigV4('execute-api',
+            aws_session_token = role.get(u'SessionToken')
+            aws_access_key_id = role.get(u'AccessKeyId')
+            aws_secret_access_key = role.get(u'SecretAccessKey')
+        return AWSSigV4(u'execute-api',
                         aws_access_key_id=aws_access_key_id,
                         aws_secret_access_key=aws_secret_access_key,
                         region=self.region,
                         aws_session_token=aws_session_token
                         )
 
-    def _request(self, path: str, *, data: dict = None, params: dict = None, headers=None,
-                 add_marketplace=True, res_no_data: bool = False) -> ApiResponse:
+    def _request(self, path, data = None, params = None, headers=None,
+                 add_marketplace=True, res_no_data = False):
         if params is None:
             params = {}
         if data is None:
             data = {}
-
-        self.method = params.pop('method', data.pop('method', 'GET'))
+        self.method = params.pop(u'method', data.pop(u'method', u'GET'))
 
         if add_marketplace:
-            self._add_marketplaces(data if self.method in ('POST', 'PUT') else params)
+            self._add_marketplaces(data if self.method in (u'POST', u'PUT') else params)
 
         res = request(self.method, self.endpoint + path,
                       params=params,
-                      data=json.dumps(data) if data and self.method in ('POST', 'PUT', 'PATCH') else None,
+                      data=json.dumps(data) if data and self.method in (u'POST', u'PUT', u'PATCH') else None,
                       headers=headers or self.headers,
                       auth=self._sign_request(),
                       proxies=self.proxies)
         return self._check_response(res, res_no_data)
 
-    def _check_response(self, res, res_no_data: bool = False) -> ApiResponse:
-        if (self.method == 'DELETE' or res_no_data) and 200 <= res.status_code < 300:
+    def _check_response(self, res, res_no_data = False):
+        if (self.method == u'DELETE' or res_no_data) and 200 <= res.status_code < 300:
             try:
                 js = res.json() or {}
-            except JSONDecodeError:
-                js = {'status_code': res.status_code}
+            except ValueError:
+                js = {u'status_code': res.status_code}
         else:
             js = res.json() or {}
         if isinstance(js, list):
             js = js[0]
-        error = js.get('errors', None)
+        error = js.get(u'errors', None)
         if error:
             exception = get_exception_for_code(res.status_code)
             raise exception(error, headers=res.headers)
-        return ApiResponse(**js, headers=res.headers)
+        return ApiResponse(headers=res.headers, **js)
 
     def _add_marketplaces(self, data):
-        POST = ['marketplaceIds', 'MarketplaceIds']
-        GET = ['MarketplaceId', 'MarketplaceIds', 'marketplace_ids', 'marketplaceIds']
+        POST = [u'marketplaceIds', u'MarketplaceIds']
+        GET = [u'MarketplaceId', u'MarketplaceIds', u'marketplace_ids', u'marketplaceIds']
 
-        if self.method == 'POST':
+        if self.method == u'POST':
             if any(x in data.keys() for x in POST):
                 return
-            return data.update({k: self.marketplace_id if not k.endswith('s') else [self.marketplace_id] for k in POST})
+            return data.update(dict((k, self.marketplace_id if not k.endswith(u's') else [self.marketplace_id]) for k in POST))
         if any(x in data.keys() for x in GET):
             return
-        return data.update({k: self.marketplace_id if not k.endswith('s') else [self.marketplace_id] for k in GET})
+        return data.update(dict((k, self.marketplace_id if not k.endswith(u's') else [self.marketplace_id]) for k in GET))
 
-    def _request_grantless_operation(self, path: str, *, data: dict = None, params: dict = None):
+    def _request_grantless_operation(self, path, data = None, params = None):
         headers = {
-            'host': self.endpoint[8:],
-            'user-agent': self.user_agent,
-            'x-amz-access-token': self.grantless_auth.access_token,
-            'x-amz-date': datetime.utcnow().strftime('%Y%m%dT%H%M%SZ'),
-            'content-type': 'application/json'
+            u'host': self.endpoint[8:],
+            u'user-agent': self.user_agent,
+            u'x-amz-access-token': self.grantless_auth.access_token,
+            u'x-amz-date': datetime.utcnow().strftime(u'%Y%m%dT%H%M%SZ'),
+            u'content-type': u'application/json'
         }
 
         return self._request(path, data=data, params=params, headers=headers)
