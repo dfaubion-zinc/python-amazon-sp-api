@@ -93,7 +93,7 @@ class Orders(Client):
         if u'RestrictedResources' in kwargs:
             kwargs.update({u'original_path': fill_query_params(kwargs.get(u'path'), order_id)})
             return self._access_restricted(kwargs)
-        return self._request(fill_query_params(kwargs.pop(u'path'), order_id), params=set(list(kwargs.items())), add_marketplace=False)
+        return self._request(fill_query_params(kwargs.pop(u'path'), order_id), params=kwargs.copy(), add_marketplace=False)
 
     @sp_endpoint(u'/orders/v0/orders/{}/orderItems')
     def get_order_items(self, order_id, **kwargs):
