@@ -13,6 +13,7 @@ setup(
         u"cachetools==3.1.1",
         u"pytz",
         u"confuse>=1.4,<1.8"
+        u"enum==0.4.7"
     ],
     packages=[u'tests', u'tests.api', u'tests.api.orders', u'tests.api.sellers', u'tests.api.finances',
               u'tests.api.product_fees', u'tests.api.notifications', u'tests.api.reports', u'tests.client',

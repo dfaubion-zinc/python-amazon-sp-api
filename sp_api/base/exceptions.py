@@ -20,6 +20,9 @@ class SellingApiException(Exception):
         self.error = error
         self.headers = headers
 
+    def __str__(self):
+        return str(self.message)
+
 
 class SellingApiBadRequestException(SellingApiException):
     u"""
