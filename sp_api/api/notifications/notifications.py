@@ -3,6 +3,16 @@ from sp_api.base.helpers import sp_endpoint, fill_query_params
 from sp_api.base import Client, Marketplaces, deprecated, NotificationType, ApiResponse
 
 
+def merge_dicts(*dict_args):
+    """
+    Given any number of dictionaries, shallow copy and merge into a new dict,
+    precedence goes to key-value pairs in latter dictionaries.
+    """
+    result = {}
+    for dictionary in dict_args:
+        result.update(dictionary)
+    return result
+
 class Notifications(Client):
     u"""
     :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/notifications-api/notifications.md
@@ -170,10 +180,7 @@ class Notifications(Client):
             u'name': name,
         }
 
-        data = list(kwargs.items())
-        data.append(list(data.items()))
-
-        return self._request_grantless_operation(kwargs.pop(u'path'), data=set(data))
+        return self._request_grantless_operation(kwargs.pop(u'path'), data=merge_dicts(kwargs, data))
 
     @sp_endpoint(u'/notifications/v1/destinations', method=u'GET')
     def get_destinations(self, **kwargs):
@@ -199,7 +206,7 @@ class Notifications(Client):
             ApiResponse:
 
         """
-        return self._request_grantless_operation(kwargs.pop(u'path'), params=set(list(kwargs.items())))
+        return self._request_grantless_operation(kwargs.pop(u'path'), params=kwargs.copy())
 
     @sp_endpoint(u'/notifications/v1/destinations/{}', method=u'GET')
     def get_destination(self, destination_id, **kwargs):
@@ -228,7 +235,7 @@ class Notifications(Client):
 
         """
         return self._request_grantless_operation(fill_query_params(kwargs.pop(u'path'), destination_id),
-                                                 params=set(list(kwargs.items())))
+                                                 params=kwargs.copy())
 
     @sp_endpoint(u'/notifications/v1/destinations/{}', method=u'DELETE')
     def delete_destination(self, destination_id, **kwargs):
@@ -255,4 +262,4 @@ class Notifications(Client):
 
         """
         return self._request_grantless_operation(fill_query_params(kwargs.pop(u'path'), destination_id),
-                                                 params=set(list(kwargs.items())))
+                                                 params=kwargs.copy())
