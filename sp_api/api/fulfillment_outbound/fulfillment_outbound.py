@@ -115,7 +115,7 @@ class FulfillmentOutbound(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop(u'path'),  data=kwargs)
+        return self._request(kwargs.pop(u'path'),  data=kwargs.copy())
     
 
     @sp_endpoint(u'/fba/outbound/2020-07-01/fulfillmentOrders', method=u'GET')

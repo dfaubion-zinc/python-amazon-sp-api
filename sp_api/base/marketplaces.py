@@ -40,7 +40,7 @@ class AwsEnv(Enum):
 AWS_ENVIRONMENT = os.getenv(u"AWS_ENV", AwsEnv.PRODUCTION)
 BASE_URL = u"https://sellingpartnerapi"
 
-if AwsEnv(AWS_ENVIRONMENT) == AwsEnv.SANDBOX:
+if getattr(AwsEnv, AWS_ENVIRONMENT) == AwsEnv.SANDBOX:
     BASE_URL = u"https://sandbox.sellingpartnerapi"
 
 
