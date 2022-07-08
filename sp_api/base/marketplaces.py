@@ -74,6 +74,32 @@ class Marketplaces(Enum):
     CA = Marketplace(u"%s-na.amazon.com" % BASE_URL, u"A2EUQ1WTGCTBG2", u"us-east-1")
     MX = Marketplace(u"%s-na.amazon.com" % BASE_URL, u"A1AM78C64UM0Y8", u"us-east-1")
 
+    @classmethod
+    def by_marketplace_id(cls, marketplace_id):
+        return {
+            "A13V1IB3VIYZZH": cls.FR,
+            "A17E79C6D8DWNP": cls.SA,
+            "A1805IZSGTT6HS": cls.NL,
+            "A19VAU5U5O7RUS": cls.SG,
+            "A1AM78C64UM0Y8": cls.MX,
+            "A1C3SOZRARQ6R3": cls.PL,
+            # "A1F83G8C2ARO7P": cls.GB,
+            "A1F83G8C2ARO7P": cls.UK,
+            "A1PA6795UKMFR9": cls.DE,
+            "A1RKKUPIHCS9HS": cls.ES,
+            "A1VC38T7YXB528": cls.JP,
+            "A21TJRUUN4KGV": cls.IN,
+            "A2EUQ1WTGCTBG2": cls.CA,
+            "A2NODRKZP88ZB9": cls.SE,
+            "A2Q3Y263D00KWC": cls.BR,
+            "A2VIGQ35RCS4UG": cls.AE,
+            "A33AVAJ2PDY3EV": cls.TR,
+            "A39IBJ37TRP1C6": cls.AU,
+            "APJ6JRA9NG5V4": cls.IT,
+            "ARBP9OOSHTCHU": cls.EG,
+            "ATVPDKIKX0DER": cls.US,
+        }.get(marketplace_id)
+
     def __init__(self, endpoint, marketplace_id, region):
         self.endpoint = endpoint
         self.marketplace_id = marketplace_id
