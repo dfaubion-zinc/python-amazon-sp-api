@@ -64,8 +64,8 @@ class Inventories(Client):
             u'granularityType': kwargs.get(u'granularityType', InventoryGranularity.MARKETPLACE.value),
             u"granularityId": kwargs.get(u'granularityId', self.marketplace_id)
         })
-        if u'sellerSkus' in kwargs:
-            kwargs.update({u'sellerSkus': u','.join([urllib.quote_plus(s) for s in kwargs.get(u'sellerSkus')])})
+        if 'sellerSkus' in kwargs:
+            kwargs.update({'sellerSkus': ','.join(kwargs.get('sellerSkus'))})
 
         return self._request(kwargs.pop(u'path'), params=kwargs)
 
