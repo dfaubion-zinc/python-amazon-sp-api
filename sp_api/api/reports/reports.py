@@ -368,7 +368,7 @@ class Reports(Client):
         if download or file or (u'decrypt' in kwargs and kwargs[u'decrypt']):
             document = requests.get(res.payload.get(u'url')).content
             if u'compressionAlgorithm' in res.payload:
-                document = zlib.decompress(bytearray(document), 15 + 32)
+                document = zlib.decompress(document, 15 + 32)
             document = document.decode(character_code)
             if download:
                 res.payload.update({

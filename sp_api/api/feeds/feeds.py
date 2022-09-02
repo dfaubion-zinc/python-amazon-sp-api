@@ -235,5 +235,5 @@ class Feeds(Client):
         url = response.payload.get(u'url')
         content = requests.get(url).content
         if u'compressionAlgorithm' in response.payload:
-            return zlib.decompress(bytearray(content), 15 + 32).decode(u'iso-8859-1')
+            return zlib.decompress(content, 15 + 32).decode(u'iso-8859-1')
         return content.decode(u'iso-8859-1')
