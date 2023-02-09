@@ -74,7 +74,7 @@ class AWSSigV4(AuthBase):
         credential_scope = u'/'.join([self.datestamp, self.region, self.service, u'aws4_request'])
         string_to_sign = u'\n'.join([u'AWS4-HMAC-SHA256', self.amzdate,
                                     credential_scope, hashlib.sha256(canonical_request.encode(u'utf-8')).hexdigest()])
-        log.debug(u"String-to-Sign: '%s'", string_to_sign)
+        log.debug(u"String-to-Sign: '%s'", string_to_sign.replace("\n", "\\n"))
 
         kDate = sign_msg((u'AWS4' + self.aws_secret_access_key).encode(u'utf-8'), self.datestamp)
         kRegion = sign_msg(kDate, self.region)
