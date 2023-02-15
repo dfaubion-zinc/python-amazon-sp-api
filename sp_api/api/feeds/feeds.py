@@ -80,7 +80,7 @@ class Feeds(Client):
             [ApiResponse:, ApiResponse:]
         """
         document_response = self.create_feed_document(file, content_type)
-        return document_response, self.create_feed(feed_type, document_response.payload.get(u'feedDocumentId'), kwargs.copy())
+        return document_response, self.create_feed(feed_type, document_response.payload.get(u'feedDocumentId'), kwargs=kwargs.copy())
 
     @sp_endpoint(u'/feeds/2021-06-30/feeds', method=u'POST')
     def create_feed(self, feed_type, input_feed_document_id, **kwargs):
