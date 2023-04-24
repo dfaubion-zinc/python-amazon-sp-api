@@ -699,8 +699,8 @@ class FulfillmentOutbound(Client):
         return self._request(fill_query_params(kwargs.pop(u'path'), featureName), params=kwargs)
     
 
-    @sp_endpoint(u'/fba/outbound/2020-07-01/features/inventory/{}', method=u'GET')
-    def get_feature_s_k_u(self, featureName, **kwargs):
+    @sp_endpoint(u'/fba/outbound/2020-07-01/features/inventory/{}/{}', method=u'GET')
+    def get_feature_s_k_u(self, featureName, sellerSku, **kwargs):
         u"""
         get_feature_s_k_u(self, featureName, **kwargs) -> ApiResponse
 
@@ -726,5 +726,5 @@ class FulfillmentOutbound(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop(u'path'), featureName), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop(u'path'), featureName, sellerSku), params=kwargs)
     
